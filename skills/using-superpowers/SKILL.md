@@ -177,18 +177,18 @@ After completing ANY skill:
 
 **This table is mandatory** - consult it after EVERY skill completion:
 
-| After This Skill | Suggest This Next | When |
-|------------------|-------------------|------|
-| `brainstorming` | `using-git-worktrees` → `writing-plans` | Design is validated and ready for implementation |
-| `writing-plans` | Choice: `executing-plans` OR `subagent-driven-development` | Plan is complete, ask which execution approach |
-| `executing-plans` | `code-simplification` (optional) → `verification-before-completion` | All tasks complete; offer simplification if 5+ files or 100+ lines changed |
-| `subagent-driven-development` | `code-simplification` (optional) → `verification-before-completion` | All tasks complete; offer simplification if 5+ files or 100+ lines changed |
-| `code-simplification` | `requesting-code-review` OR `verification-before-completion` | Code refined; choose review or verify |
-| `test-driven-development` | `verification-before-completion` | Tests passing and implementation complete |
-| `systematic-debugging` | `verification-before-completion` | Fix implemented |
-| `verification-before-completion` | `finishing-a-development-branch` | All tests pass |
-| `requesting-code-review` | `finishing-a-development-branch` | Feedback addressed |
-| `finishing-a-development-branch` | `ai-self-reflection` OR `compound-learning` | Work integrated, capture learnings |
+| After This Skill                 | Suggest This Next                                                                    | When                                                                       |
+|----------------------------------|--------------------------------------------------------------------------------------|----------------------------------------------------------------------------|
+| `brainstorming`                  | `writing-plans`                                                                      | Design is validated and ready for implementation                           |
+| `writing-plans`                  | `using-git-worktrees` - > Choice: `executing-plans` OR `subagent-driven-development` | Plan is complete, ask which execution approach                             |
+| `executing-plans`                | `code-simplification` (optional) → `verification-before-completion`                  | All tasks complete; offer simplification if 5+ files or 100+ lines changed |
+| `subagent-driven-development`    | `code-simplification` (optional) → `verification-before-completion`                  | All tasks complete; offer simplification if 5+ files or 100+ lines changed |
+| `code-simplification`            | `requesting-code-review` OR `verification-before-completion`                         | Code refined; choose review or verify                                      |
+| `test-driven-development`        | `verification-before-completion`                                                     | Tests passing and implementation complete                                  |
+| `systematic-debugging`           | `verification-before-completion`                                                     | Fix implemented                                                            |
+| `verification-before-completion` | `finishing-a-development-branch`                                                     | All tests pass                                                             |
+| `requesting-code-review`         | `finishing-a-development-branch`                                                     | Feedback addressed                                                         |
+| `finishing-a-development-branch` | `ai-self-reflection` OR `compound-learning`                                          | Work integrated, capture learnings                                         |
 
 **Format for suggestions:**
 ```
