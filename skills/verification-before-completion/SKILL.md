@@ -21,6 +21,20 @@ NO COMPLETION CLAIMS WITHOUT FRESH VERIFICATION EVIDENCE
 
 If you haven't run the verification command in this message, you cannot claim it passes.
 
+## Evidence Before Assertions
+
+**Never declare success based on:**
+- ❌ Assumptions ("agent should have worked in worktree")
+- ❌ Indirect evidence ("SAM deployment succeeded" → Lambda must work)
+- ❌ Intention ("I wrote the fix" → tests must pass)
+- ❌ Documentation ("design says it should work")
+
+**Always verify with:**
+- ✅ Actual commands that show real state
+- ✅ Command output as concrete proof
+- ✅ Checks in ALL relevant locations
+- ✅ Tests that actually run, not theoretical coverage
+
 ## The Gate Function
 
 ```
@@ -40,6 +54,85 @@ BEFORE claiming any status or expressing satisfaction:
 
 Skip any step = lying, not verifying
 ```
+
+## Verification Types and Commands
+
+### File System / Worktree Verification
+
+When using worktrees, check BOTH locations:
+
+```bash
+# Check worktree location
+ls /path/to/.worktrees/feature-name/target/directory/
+
+# Check main directory
+ls /path/to/main-project/target/directory/
+
+# Report findings
+if [ worktree has files ]; then
+  echo "✅ Implementation in worktree (expected)"
+elif [ main has files ]; then
+  echo "⚠️  Implementation in main directory (unexpected but present)"
+else
+  echo "❌ No implementation found"
+fi
+```
+
+**Don't assume agents follow path instructions - verify with evidence.**
+
+### Infrastructure Verification (AWS, Cloud Services)
+
+Don't trust deployment messages alone - verify actual state:
+
+```bash
+# Lambda verification
+aws lambda get-function --function-name [name]        # Does it exist?
+aws lambda invoke --function-name [name] --payload {} # Does it work?
+aws logs tail /aws/lambda/[name]                      # Are logs showing success?
+
+# IAM permissions verification
+aws iam get-role-policy --role-name [role] --policy-name [policy]
+
+# EventBridge schedules verification
+aws scheduler get-schedule --name [name]  # Actually created?
+
+# Test actual invocation with real payload
+aws lambda invoke \
+  --function-name [name] \
+  --payload '{"action":"GET","userId":"test@example.com"}' \
+  response.json
+cat response.json  # Show actual response
+```
+
+**Evidence required:**
+- ✅ Resource exists (not assumed from CloudFormation status)
+- ✅ Resource responds to real invocations (not mocked)
+- ✅ IAM permissions exist on correct role (not guessed from docs)
+- ✅ Logs show actual operations (not inferred)
+
+### Build Verification (TypeScript, Compiled Languages)
+
+**For TypeScript/Next.js/compiled projects**, always run local build before pushing:
+
+```bash
+# TypeScript/Next.js projects
+cd packages/admin-ui
+pnpm build
+
+# Wait for successful output
+# ✓ Compiled successfully
+
+# Only push after seeing success
+```
+
+**Common build errors caught locally:**
+- Missing type definitions
+- Wrong parameter counts
+- Return type mismatches
+- Import errors
+- ESM/CJS compatibility issues
+
+**Pattern:** If you have a build step, run it locally BEFORE pushing. Never discover build errors in CI.
 
 ## Common Failures
 
