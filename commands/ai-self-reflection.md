@@ -1,16 +1,6 @@
 ---
-name: ai-self-reflection
-description: Analyze session for mistakes and capture learnings
+description: "Execute a self-reflection on the last sessions."
+disable-model-invocation: true
 ---
 
-# AI Self-Reflection Command
-
-Analyze the current session for mistakes and capture learnings.
-
-## Usage
-
-```bash
-/ai-self-reflection
-```
-
-**REQUIRED SUB-SKILL:** superpowers:ai-self-reflection
+Invoke the superpowers:ai-self-reflection skill and follow it exactly as presented to you
