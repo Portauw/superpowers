@@ -96,30 +96,12 @@ When you invoke a skill via the Skill tool:
 
 ## Model Selection for Skills
 
-**IMPORTANT**: Always use the appropriate model for each skill to balance quality and cost.
+**IMPORTANT**: Use appropriate models to balance quality and cost.
+- **Opus** for brainstorming/design (use Task tool with `model="opus"`)
+- **Sonnet** for planning, code review, debugging
+- **Haiku** for execution, TDD, verification
 
-**Design & Architecture Skills (Use OPUS):**
-- `superpowers:brainstorming` → **Opus** - Architectural decisions, exploring approaches, creative problem-solving
-- Use Task tool with `model="opus"` instead of Skill tool when invoking these
-
-**Planning Skills (Use SONNET):**
-- `superpowers:writing-plans` → **Sonnet** - Structured planning, breaking down tasks, writing implementation steps
-- `superpowers:requesting-code-review` → **Sonnet** - Code analysis, quality assessment, suggesting improvements
-
-**Execution Skills (Use HAIKU):**
-- `superpowers:executing-plans` → **Haiku** - Following explicit plan instructions, mechanical implementation
-- `superpowers:subagent-driven-development` → **Haiku** - Task-by-task execution with supervision
-- `superpowers:test-driven-development` → **Haiku** - Writing tests and implementation following TDD pattern
-- `superpowers:verification-before-completion` → **Haiku** - Running tests, checking outputs
-
-**Debugging Skills (Use SONNET):**
-- `superpowers:systematic-debugging` → **Sonnet** - Investigating bugs, analyzing failures, root cause analysis
-- `superpowers:receiving-code-review` → **Sonnet** - Understanding feedback, verifying suggestions
-
-**General Guidelines:**
-- **Opus** (💎 Highest cost, highest quality): Architectural decisions, ambiguous requirements, creative design
-- **Sonnet** (⚖️ Balanced): Structured planning, code review, debugging, general development
-- **Haiku** (⚡ Lowest cost): Mechanical execution, following explicit instructions, straightforward tasks
+See model-selection.md for full breakdown by skill.
 
 ## User Instructions
 
@@ -140,9 +122,60 @@ Recognize these user phrases as skill invocation triggers:
 
 **Exception:** Only skip skill if user explicitly says "skip the workflow" or "just commit it".
 
+## Workflow Discipline: Mandatory, Not Optional
+
+### Never Skip Skill Steps
+
+When using a skill, **follow EVERY step exactly as written**:
+
+- ❌ **Bad:** "This step seems optional, I'll skip it"
+- ❌ **Bad:** "I understand the intent, I'll do it my way"
+- ❌ **Bad:** "Step 1 says invoke another skill, but I'll just do the work directly"
+- ✅ **Good:** Read every step, execute every step, in order, exactly as documented
+
+**Example: finishing-a-development-branch**
+- Step 0: Pre-flight check
+- **Step 1: Invoke `documenting-completed-implementation` if plan exists** ← NEVER SKIP THIS
+- Step 2: Verify tests/build
+- Step 3: Determine base branch
+- Step 4: Present options
+- Step 5: Execute choice
+
+**If you think "I'll skip this step because..." → STOP. Follow the skill.**
+
+### Always Suggest Next Skills Proactively
+
+After completing ANY skill:
+
+1. **State completion clearly:**
+   - "✅ [skill] complete - [brief outcome]"
+   - Example: "✅ verification-before-completion finished - all tests pass"
+
+2. **Consult the Common Workflow Chains table below**
+   - This table is the **source of truth**
+   - Don't work from memory
+   - Check it EVERY time
+
+3. **Suggest next skill immediately:**
+   - Be directive: "**Next step:** Use `superpowers:[next-skill]` to [purpose]"
+   - Not passive: ❌ "What would you like to do next?"
+   - Not optional: ❌ "You could maybe try..."
+
+**Users should NEVER have to ask "what's next?"**
+
+### Common Mistakes to Avoid
+
+| Mistake | Example | Correct Behavior |
+|---------|---------|------------------|
+| **Not suggesting next skill** | Completes verification, waits for user to ask | Immediately suggest finishing-a-development-branch |
+| **Skipping skill steps** | Uses finishing skill but skips Step 1 (documenting) | Follow every step in order |
+| **Suggesting wrong skill** | After verification, suggests compound-learning instead of finishing | Consult workflow chains table |
+| **Being passive** | "What would you like to do?" after completing work | "**Next step:** Use [skill]..." |
+| **Working from memory** | "I remember this skill does X" | Read the actual loaded skill content |
+
 ## Common Workflow Chains
 
-**After completing ANY skill, proactively suggest the next logical step:**
+**This table is mandatory** - consult it after EVERY skill completion:
 
 | After This Skill | Suggest This Next | When |
 |------------------|-------------------|------|
@@ -157,8 +190,11 @@ Recognize these user phrases as skill invocation triggers:
 | `requesting-code-review` | `finishing-a-development-branch` | Feedback addressed |
 | `finishing-a-development-branch` | `ai-self-reflection` OR `compound-learning` | Work integrated, capture learnings |
 
-**Be proactive, not passive:**
-- ✅ "✅ [skill] complete. **Next step:** Use `superpowers:[next-skill]` to [purpose]"
-- ❌ "What would you like to do next?"
+**Format for suggestions:**
+```
+✅ [skill] complete - [brief outcome]
 
-**This is mandatory workflow discipline** - always suggest the next step.
+**Next step:** Use `superpowers:[next-skill]` to [purpose]
+```
+
+**This is not guidance. This is mandatory workflow discipline.**

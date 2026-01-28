@@ -11,6 +11,110 @@ Help turn ideas into fully formed designs and specs through natural collaborativ
 
 Start by understanding the current project context, then ask questions one at a time to refine the idea. Once you understand what you're building, present the design in small sections (200-300 words), checking after each section whether it looks right so far.
 
+## Thorough Upfront Analysis (Before Implementation)
+
+Before jumping to solutions, perform three types of analysis:
+
+### 1. Mental Model Discovery
+
+**Don't assume - ask for the user's conceptual model FIRST:**
+
+**Discovery Questions:**
+```
+Before I propose solutions, let me understand your mental model:
+
+For prompt/config architecture:
+- What's immutable vs configurable?
+- What takes precedence when both are set?
+- Do these compose or replace each other?
+- Who can change each piece (user, admin, system)?
+
+For data flow:
+- Where does each piece come from?
+- In what order are they processed?
+- What happens if one is missing?
+
+For user expectations:
+- What should happen if user sets both X and Y?
+- Should this be automatic or explicit?
+- What's the default behavior?
+```
+
+**Then draw a diagram showing user's model:**
+```
+System Prompt:
+┌─────────────────────────────────────┐
+│ [component A - source/role]         │
+│ [component B - source/role]         │
+│ [component C - source/role]         │
+└─────────────────────────────────────┘
+
+Data Flow:
+Component A → Component B → Component C
+```
+
+**Get explicit sign-off:** "Does this match your vision? Any corrections?"
+
+**THEN propose implementation** - only after conceptual alignment.
+
+### 2. Feature Interaction Mapping
+
+**When adding feature X that touches existing config Y, create interaction matrix:**
+
+**Step 1: Identify intersecting configs**
+- User prompts (new) + Schedule prompts (existing)
+- Active hours (new) + Sync intervals (existing)
+- Per-user settings (new) + Global defaults (existing)
+
+**Step 2: Enumerate all combinations**
+```
+             | No Existing Feature | Existing Feature Enabled
+-------------|---------------------|-------------------------
+New Off      | ?                   | ?
+New On       | ?                   | ?
+```
+
+**Step 3: Define behavior for EACH cell**
+- What happens?
+- What takes precedence?
+- What's the user expectation?
+
+**Example filled in:**
+```
+             | No Schedule Prompt       | Schedule Prompt
+-------------|--------------------------|---------------------------
+No Context   | Use system defaults      | Schedule defines task
+User Context | Context + default task   | Context + schedule (composed)
+
+Key: User context is ALWAYS included (never overridden)
+```
+
+**Step 4: Document in design**
+
+### 3. Scope Expansion Audit
+
+**When scope expands (specific → general), audit ALL artifacts:**
+
+**Checklist:**
+- [ ] **Field names:** `grep -rn "meeting_" packages/` → rename to generic
+- [ ] **Schema descriptions:** "for the meeting" → "for the event"
+- [ ] **Documentation examples:** Add non-meeting examples
+- [ ] **Code comments:** Update to reflect broader scope
+- [ ] **Test cases:** Cover edge cases of broader scope
+- [ ] **Variable names:** meetingsList → eventsList
+
+**Examples of scope expansion:**
+- Meeting-specific → Event-agnostic
+- Client-specific → User-agnostic
+- Single-tenant → Multi-tenant
+- US-only → International
+
+**Red flags:**
+- New feature supports broader use cases than naming suggests
+- Documentation examples don't cover new use cases
+- Field names contain domain-specific terms
+- Tests only cover original narrow scope
+
 ## The Process
 
 **Understanding the idea:**

@@ -3,11 +3,15 @@ date: 2026-01-27
 type: user-correction
 source: ai-detected
 confidence: high
+category: general-workflow
 tags: [ai-self-reflection, learnings, workflow, categorization, meta-learning]
 project: superpowers
+implemented: 2026-01-28
 ---
 
 # AI Self-Reflection Should Distinguish Project vs Skill Learnings and Act Accordingly
+
+**IMPLEMENTED:** Enhanced `ai-self-reflection` skill on 2026-01-28. Added categorization phase to Step 3, grouped learnings by scope (project/skill/platform/reference), and added category-specific action options.
 
 ## What Happened
 
