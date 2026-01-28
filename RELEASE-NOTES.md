@@ -1,5 +1,20 @@
 # Superpowers Release Notes
 
+## v4.1.6 (2026-01-28)
+
+### Improvements
+
+**Merged upstream fixes from obra/superpowers**
+
+Synchronized with upstream repository to incorporate infrastructure and compatibility improvements:
+
+- **OpenCode plugin directory standardization** - Renamed `.opencode/plugin/` to `.opencode/plugins/` per official OpenCode documentation
+- **Windows hook execution fixes** - Updated `hooks/hooks.json` and `hooks/run-hook.cmd` for Claude Code 2.1.x compatibility
+- **Line ending enforcement** - Added `.gitattributes` to ensure LF line endings for shell scripts (prevents CRLF issues on Windows)
+- **OpenCode installation improvements** - Updated documentation and test scripts for symlink handling
+
+This release maintains all custom features from v4.1.5 (code simplification, AI self-reflection, meta-learning) while incorporating upstream's cross-platform compatibility fixes.
+
 ## v4.1.5 (2026-01-21)
 
 ### New Features
