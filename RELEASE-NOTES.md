@@ -1,5 +1,15 @@
 # Superpowers Release Notes
 
+## v4.1.7 (2026-01-28)
+
+### Improvements
+
+**Simplified ai-self-reflection command**
+
+- Removed redundant description and metadata from `/ai-self-reflection` command
+- Command now simply invokes `superpowers:ai-self-reflection` skill directly
+- Cleaner command definition using `disable-model-invocation: true`
+
 ## v4.1.6 (2026-01-28)
 
 ### Improvements
