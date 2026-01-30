@@ -12,7 +12,7 @@ description: Use when verification-before-completion finishes or when analyzing 
 ## When to Use
 
 - After `verification-before-completion` completes (automatic)
-- Via `/retrospective` command (manual)
+- Via `/ai-self-reflection` command (manual)
 - When asked to "reflect on this session"
 
 ## Workflow Overview
@@ -194,7 +194,7 @@ See reference.md for detailed procedures. High-level:
 
 **Triggered by:**
 - verification-before-completion (automatic)
-- `/retrospective` command (manual)
+- `/ai-self-reflection` command (manual)
 
 **Feeds into:**
 - meta-learning-review (analyzes ai-detected learnings by category)

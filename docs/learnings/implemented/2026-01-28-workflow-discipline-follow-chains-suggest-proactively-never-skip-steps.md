@@ -32,8 +32,8 @@ After completing ANY skill, check the "Common Workflow Chains" table in `using-s
 ```markdown
 | After This Skill              | Suggest This Next              | When                    |
 |-------------------------------|--------------------------------|-------------------------|
-| brainstorming                 | using-git-worktrees → writing-plans | Design validated   |
-| writing-plans                 | executing-plans OR subagent-driven-development | Plan complete |
+| brainstorming                 | writing-plans                  | Design validated        |
+| writing-plans                 | using-git-worktrees → executing-plans OR subagent-driven-development | Plan complete |
 | executing-plans               | code-simplification (optional) → verification-before-completion | All tasks complete |
 | verification-before-completion| finishing-a-development-branch | All tests pass          |
 | finishing-a-development-branch| ai-self-reflection             | Work integrated         |

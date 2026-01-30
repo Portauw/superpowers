@@ -340,7 +340,7 @@ git commit -m "docs: capture AI self-reflection learnings from session"
 
 **User skips all:**
 ```
-Learnings not captured. You can run /retrospective again later.
+Learnings not captured. You can run /ai-self-reflection again later.
 ```
 
 **Git not available:**

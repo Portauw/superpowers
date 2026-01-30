@@ -240,7 +240,7 @@ Reflect on this session and capture learnings? (optional)
 
 If yes: Invoke ai-self-reflection skill.
 
-Note: You can also manually trigger retrospection later with `/retrospective` command.
+Note: You can also manually trigger retrospection later with `/ai-self-reflection` command.
 
 ## The Bottom Line
 

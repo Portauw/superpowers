@@ -14,6 +14,10 @@ graph TB
     User -->|/brainstorm| CmdBrainstorm["/brainstorm command"]
     User -->|/write-plan| CmdWritePlan["/write-plan command"]
     User -->|/execute-plan| CmdExecutePlan["/execute-plan command"]
+    User -->|/simplify| CmdSimplify["/simplify command"]
+    User -->|/compound| CmdCompound["/compound command"]
+    User -->|/review-learnings| CmdReviewLearnings["/review-learnings command"]
+    User -->|/ai-self-reflection| CmdAiReflection["/ai-self-reflection command"]
 
     %% Skill Discovery
     CC -->|uses| SkillsCore["lib/skills-core.js<br/>• findSkillsInDir<br/>• resolveSkillPath<br/>• extractFrontmatter"]
@@ -23,6 +27,10 @@ graph TB
     CmdBrainstorm -.->|invokes| Brainstorming
     CmdWritePlan -.->|invokes| WritingPlans
     CmdExecutePlan -.->|invokes| ExecutingPlans
+    CmdSimplify -.->|invokes| CodeSimplification
+    CmdCompound -.->|invokes| CompoundLearning
+    CmdReviewLearnings -.->|invokes| MetaLearningReview
+    CmdAiReflection -.->|invokes| AiReflection
 
     %% Skills organized by phase
     subgraph DesignPhase[Design & Planning Skills]
@@ -37,11 +45,13 @@ graph TB
     subgraph ExecutionPhase[Execution Skills]
         ExecutingPlans[executing-plans<br/>batch with checkpoints]
         SubagentDev[subagent-driven-development<br/>parallel task execution]
+        DispatchingAgents[dispatching-parallel-agents<br/>concurrent workflows]
         TDD[test-driven-development<br/>RED-GREEN-REFACTOR]
     end
 
     subgraph QualityPhase[Quality Skills]
         SystematicDebug[systematic-debugging<br/>4-phase process]
+        CodeSimplification[code-simplification<br/>optional cleanup via agent]
         RequestingReview[requesting-code-review<br/>pre-review checklist]
         ReceivingReview[receiving-code-review<br/>feedback verification]
         Verification[verification-before-completion<br/>ensure it works]
@@ -52,23 +62,36 @@ graph TB
         FinishingBranch[finishing-a-development-branch<br/>invokes documenting + git workflow]
     end
 
+    subgraph MetaLearningPhase[Meta-Learning Skills]
+        AiReflection[ai-self-reflection<br/>automatic mistake detection]
+        CompoundLearning[compound-learning<br/>quick learning capture]
+        MetaLearningReview[meta-learning-review<br/>pattern detection + skill suggestions]
+    end
+
     subgraph MetaSkills[Meta Skills]
         WritingSkills[writing-skills<br/>TDD for documentation]
     end
 
     %% Main Workflow Chain
-    Brainstorming ==>|1. after design approval| GitWorktrees
-    GitWorktrees ==>|2. in clean workspace| WritingPlans
-    WritingPlans ==>|3a. current session| SubagentDev
-    WritingPlans ==>|3b. or batch mode| ExecutingPlans
+    Brainstorming ==>|1. after design approval| WritingPlans
+    WritingPlans ==>|2. plan complete| GitWorktrees
+    GitWorktrees ==>|3. in clean workspace| SubagentDev
+    GitWorktrees ==>|3. or batch mode| ExecutingPlans
     SubagentDev ==>|enforces during impl| TDD
     ExecutingPlans ==>|enforces during impl| TDD
-    TDD ==>|before commit| RequestingReview
+    TDD ==>|optional cleanup| CodeSimplification
+    CodeSimplification ==>|before verification| Verification
+    TDD ==>|or skip to| Verification
+    Verification ==>|optional learning| AiReflection
+    Verification ==>|or to review| RequestingReview
     RequestingReview ==>|all tasks done| FinishingBranch
     FinishingBranch -->|invokes if plan exists| Documenting
+    FinishingBranch ==>|after completion| CompoundLearning
+    CompoundLearning -.->|every 10 learnings| MetaLearningReview
 
     %% Agent System
     SubagentDev -->|spawns for review| CodeReviewer[agents/code-reviewer.md<br/>2-stage review:<br/>1. spec compliance<br/>2. code quality]
+    CodeSimplification -.->|if plugin available| CodeSimplifierAgent[code-simplifier agent<br/>external plugin]
 
     %% Supporting Files
     SystematicDebug -.->|references| SupportingFiles["Supporting Files:<br/>• condition-based-waiting.md<br/>• root-cause-tracing.md<br/>• defense-in-depth.md<br/>• example scripts"]
@@ -92,8 +115,8 @@ graph TB
 
     class User,CC userClass
     class Plugin,Hook,UsingSuperpowers pluginClass
-    class Brainstorming,WritingPlans,GitWorktrees,ExecutingPlans,SubagentDev,TDD,SystematicDebug,RequestingReview,ReceivingReview,Verification,Documenting,FinishingBranch,WritingSkills skillClass
-    class CodeReviewer agentClass
+    class Brainstorming,WritingPlans,GitWorktrees,ExecutingPlans,SubagentDev,DispatchingAgents,TDD,SystematicDebug,CodeSimplification,RequestingReview,ReceivingReview,Verification,Documenting,FinishingBranch,AiReflection,CompoundLearning,MetaLearningReview,WritingSkills skillClass
+    class CodeReviewer,CodeSimplifierAgent agentClass
     class TestRunner,FastTests,IntegrationTests testClass
 ```
 
@@ -120,14 +143,14 @@ sequenceDiagram
     CC->>U: Present design in sections
     U->>CC: Approve design
 
-    CC->>S: Load using-git-worktrees skill
-    S-->>CC: Skill content
-    CC->>CC: Create isolated workspace
-
     CC->>S: Load writing-plans skill
     S-->>CC: Skill content
     CC->>U: Present implementation plan
     U->>CC: Approve plan
+
+    CC->>S: Load using-git-worktrees skill
+    S-->>CC: Skill content
+    CC->>CC: Create isolated workspace
 
     CC->>S: Load subagent-driven-development skill
     S-->>CC: Skill content
@@ -154,11 +177,36 @@ sequenceDiagram
         end
     end
 
+    opt Substantial changes (5+ files or 100+ lines)
+        CC->>S: Load code-simplification skill
+        S-->>CC: Skill content
+        CC->>A: Spawn code-simplifier agent (if available)
+        A-->>CC: Simplified code
+    end
+
+    CC->>S: Load verification-before-completion skill
+    S-->>CC: Skill content
+    CC->>CC: Run tests/build
+    CC->>U: Show verification results
+
+    opt After verification
+        CC->>S: Load ai-self-reflection skill
+        S-->>CC: Skill content
+        CC->>CC: Analyze session for mistakes
+        CC->>CC: Capture learnings automatically
+    end
+
     CC->>S: Load finishing-a-development-branch skill
     S-->>CC: Skill content
     CC->>U: Present completion options<br/>(merge/PR/keep/discard)
     U->>CC: Choose option
     CC->>CC: Execute completion
+
+    opt After completion
+        CC->>S: Load compound-learning skill
+        S-->>CC: Skill content
+        CC->>CC: Quick learning capture
+    end
 ```
 
 ## File Organization Structure
@@ -185,16 +233,32 @@ graph TB
             C1[brainstorm.md]
             C2[write-plan.md]
             C3[execute-plan.md]
+            C4[simplify.md]
+            C5[compound.md]
+            C6[review-learnings.md]
+            C7[ai-self-reflection.md]
         end
 
         subgraph Skills["skills/"]
             S1[using-superpowers/SKILL.md]
             S2[brainstorming/SKILL.md]
             S3[writing-plans/SKILL.md]
-            S4[test-driven-development/SKILL.md]
-            S5[systematic-debugging/<br/>SKILL.md + supporting files]
+            S4[using-git-worktrees/SKILL.md]
+            S5[executing-plans/SKILL.md]
             S6[subagent-driven-development/SKILL.md]
-            S7[... more skills]
+            S7[dispatching-parallel-agents/SKILL.md]
+            S8[test-driven-development/SKILL.md]
+            S9[systematic-debugging/<br/>SKILL.md + supporting files]
+            S10[code-simplification/SKILL.md]
+            S11[requesting-code-review/SKILL.md]
+            S12[receiving-code-review/SKILL.md]
+            S13[verification-before-completion/SKILL.md]
+            S14[documenting-completed-implementation/SKILL.md]
+            S15[finishing-a-development-branch/SKILL.md]
+            S16[ai-self-reflection/SKILL.md]
+            S17[compound-learning/SKILL.md]
+            S18[meta-learning-review/SKILL.md]
+            S19[writing-skills/SKILL.md]
         end
 
         subgraph Agents["agents/"]

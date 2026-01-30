@@ -1,5 +1,76 @@
 # Superpowers Release Notes
 
+## v5.0.0 (2026-01-29)
+
+### Breaking Changes
+
+**Renamed brainstorming skill and command**
+
+- **Skill renamed:** `brainstorming` → `design-exploration`
+- **Command renamed:** `/brainstorm` → `/design`
+
+**Why this change?**
+
+The term "brainstorming" implied unstructured idea generation, which didn't accurately reflect the skill's systematic Socratic design refinement process. "Design exploration" better captures what the skill actually does: exploring requirements, validating assumptions, and refining designs before implementation.
+
+**Migration:**
+
+- Users invoking `superpowers:brainstorming` must update to `superpowers:design-exploration`
+- Users using `/brainstorm` command must update to `/design`
+- All workflow documentation updated to reference new names
+- Skill content and behavior unchanged - only naming
+
+**Files affected:**
+- Skills: `skills/brainstorming/` → `skills/design-exploration/`
+- Commands: `commands/brainstorm.md` → `commands/design.md`
+- Documentation: `CLAUDE.md`, `README.md`, `docs/architecture.md`
+- Related skills: `using-superpowers`, `finishing-a-development-branch`, `writing-plans`, `subagent-driven-development`
+
+## v4.1.9 (2026-01-29)
+
+### Improvements
+
+**Corrected workflow order: Plan before workspace**
+
+Fixed workflow chain to establish plan before creating workspace. Previously suggested creating git worktree after brainstorming, but before writing plan - this led to working on wrong branch or confusion about where to run planning.
+
+**Correct order:**
+1. `brainstorming` → Design exploration and validation
+2. `writing-plans` → Detailed implementation planning (now happens before workspace)
+3. `using-git-worktrees` → Isolated workspace creation (now happens after plan complete)
+4. `executing-plans` or `subagent-driven-development` → Task execution
+
+**Skills updated:**
+- `brainstorming` (Phase 5 Implementation) - Now asks "Ready to create the implementation plan?" instead of "Ready to set up for implementation?" and flows directly to writing-plans
+- `writing-plans` (Execution Handoff) - Removed "Context: This should be run in a dedicated worktree" note, now suggests using-git-worktrees after plan complete
+
+**Documentation updated:**
+- `CLAUDE.md` (Workflow Chain section) - Reordered workflow 1-2-3 from brainstorming → writing-plans → using-git-worktrees
+- `README.md` (Core Workflow section) - Reordered numbered workflow steps to match corrected sequence
+- `docs/architecture.md` (All diagrams) - Updated workflow chain graph, sequence diagram, and workflow descriptions to show plan-first approach
+
+**Source learning:**
+- `docs/learnings/implemented/2026-01-28-workflow-discipline-follow-chains-suggest-proactively-never-skip-steps.md` - Consolidated learning about workflow discipline, proper skill suggestions, and following workflow chains exactly
+
+## v4.1.8 (2026-01-29)
+
+### Improvements
+
+**Documentation and command consolidation**
+
+- **Removed `/retrospective` command** - Consolidated to single `/ai-self-reflection` command
+  - `/retrospective` was a redundant alias for `/ai-self-reflection`
+  - Reduces confusion by having one canonical way to trigger AI self-reflection
+  - Updated all references across skills, documentation, and release notes
+
+- **Updated architecture.md** - Brought documentation current with v4.1.7+ features
+  - Added missing skills: `code-simplification`, `ai-self-reflection`, `meta-learning-review`, `compound-learning`, `dispatching-parallel-agents`
+  - Added missing commands: `/simplify`, `/compound`, `/review-learnings`, `/ai-self-reflection`
+  - Updated workflow chain to include optional quality and meta-learning steps
+  - Added new MetaLearningPhase section to skill organization
+  - Updated sequence diagram with code simplification and learning capture steps
+  - Expanded file organization to show all 19 skills and 7 commands explicitly
+
 ## v4.1.7 (2026-01-28)
 
 ### Improvements
@@ -109,7 +180,7 @@ Superpowers can now automatically detect mistakes during development sessions an
 - Shows summary of detected learnings with bulk confirmation
 - Creates YAML-frontmatter learning files with `source: ai-detected` field
 - Integrates with meta-learning-review for pattern detection
-- Manual trigger via `/ai-self-reflection` or `/retrospective` commands
+- Manual trigger via `/ai-self-reflection` command
 - Optional automatic trigger after `verification-before-completion`
 
 **Integration:**
@@ -120,7 +191,7 @@ Superpowers can now automatically detect mistakes during development sessions an
 ### Improvements
 
 - Learning analyzer now handles `source`, `type`, and `confidence` fields in frontmatter
-- Added `/ai-self-reflection` and `/retrospective` commands for manual triggering
+- Added `/ai-self-reflection` command for manual triggering
 
 ## v4.0.6 (2026-01-11)
 

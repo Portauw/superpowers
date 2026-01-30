@@ -194,8 +194,8 @@ Skills are discovered through:
 
 Core skills trigger in sequence:
 1. `brainstorming` → Design exploration and validation
-2. `using-git-worktrees` → Isolated workspace creation
-3. `writing-plans` → Detailed implementation planning
+2. `writing-plans` → Detailed implementation planning
+3. `using-git-worktrees` → Isolated workspace creation
 4. `subagent-driven-development` or `executing-plans` → Task execution
 5. `test-driven-development` → RED-GREEN-REFACTOR enforcement (triggered during implementation)
 6. `systematic-debugging` → 4-phase root cause analysis (triggered when bugs occur)
