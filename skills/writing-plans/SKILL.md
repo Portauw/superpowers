@@ -85,12 +85,41 @@ git commit -m "feat: add specific feature"
 ```
 ```
 
+## Test Code Quality in Plans
+
+**Test examples set the quality bar** - agents copy what you show them.
+
+**Strong assertions (recommended):**
+```javascript
+// ✅ GOOD - Verify actual values
+expect(mockAnalyze).toHaveBeenCalledWith(
+  events,
+  'Focus on client meetings',
+  'Skip all-day events',  // Actual filterPrompt value
+  geminiClient
+);
+```
+
+**Weak placeholders (avoid):**
+```javascript
+// ❌ BAD - Gets copied literally
+expect(mockAnalyze).toHaveBeenCalledWith(
+  expect.anything(),
+  expect.anything(),
+  expect.anything(),  // Agent copies this pattern
+  expect.anything()
+);
+```
+
+**Decision:** Either provide strong test examples OR omit test code entirely (agents write good tests naturally).
+
 ## Remember
 - Exact file paths always
 - Complete code in plan (not "add validation")
 - Exact commands with expected output
 - Reference relevant skills with @ syntax
 - DRY, YAGNI, TDD, frequent commits
+- Test examples: strong assertions or none (no weak placeholders)
 
 ## Execution Handoff
 
