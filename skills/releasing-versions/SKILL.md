@@ -100,7 +100,7 @@ fi
 
 **Based on changes, determine bump type:**
 
-Ask user if unclear:
+**ALWAYS ask user for confirmation - never proceed without approval:**
 ```
 Based on these changes, I see [summary].
 
@@ -111,6 +111,12 @@ Proposed version: [new version]
 
 Is this correct?
 ```
+
+**Why mandatory confirmation:**
+- User may have context about upcoming changes
+- Version strategy may differ from default semantic versioning
+- Prevents releasing wrong version number
+- Ensures alignment before modifying files
 
 **Examples:**
 - Renamed skill → MAJOR (breaking change)
@@ -243,6 +249,7 @@ git push origin vX.Y.Z  # push tag
 | Mistake | Fix |
 |---------|-----|
 | Bump version without checking git status | Always run `git status` first |
+| Skip user confirmation in Step 3 | ALWAYS ask user to confirm version bump, never proceed without approval |
 | Patch bump for new features | New features = MINOR bump |
 | Minor bump for breaking changes | Breaking changes = MAJOR bump |
 | Forget to tag after commit | Tag is required: `git tag -a vX.Y.Z -m "..."` |
@@ -254,6 +261,7 @@ git push origin vX.Y.Z  # push tag
 ## Red Flags - STOP and Review
 
 - Version bumped without git status check
+- Proceeding to Step 4 without user confirmation in Step 3
 - "This is just a small change" (still needs proper versioning)
 - Skipping release notes
 - Not tagging the release
