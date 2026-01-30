@@ -115,6 +115,35 @@ Key: User context is ALWAYS included (never overridden)
 - Field names contain domain-specific terms
 - Tests only cover original narrow scope
 
+### 4. UI Consistency Audit
+
+**When adding UI elements similar to existing ones, audit for consistency:**
+
+**Checklist:**
+- [ ] **Form field validation:** Character limits, format validation, required fields
+- [ ] **Visual feedback:** Character counters, error messages, success states
+- [ ] **Accessibility:** Labels, ARIA attributes, keyboard navigation
+- [ ] **Styling:** Spacing, sizing, color scheme matches similar fields
+- [ ] **Help text:** Descriptions, examples, tooltips
+
+**Examples of similar UI elements:**
+- Textarea fields (AI Instructions, Event Filter, Custom Prompt)
+- Date/time pickers (Schedule start time, Active hours)
+- File upload fields (Drive file picker, local file upload)
+- Toggle switches (Enable/disable features)
+
+**Pattern detection:**
+1. Identify existing similar elements
+2. Document their patterns (e.g., "All textarea fields have 5000 char limit + counter")
+3. Apply same patterns to new element
+4. Verify in design review
+
+**Red flags:**
+- New textarea lacks character limit when others have it
+- New form field missing validation that others have
+- Inconsistent styling or spacing
+- Missing help text when similar fields explain usage
+
 ## The Process
 
 **Understanding the idea:**
