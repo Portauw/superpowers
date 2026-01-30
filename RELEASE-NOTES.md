@@ -1,5 +1,40 @@
 # Superpowers Release Notes
 
+## v4.4.0 (2026-01-30)
+
+### New Features
+
+**safe-refactoring skill** - Systematic deletion and renaming workflow
+
+- New skill `safe-refactoring` - Complete workflow for safely deleting unused code and renaming functions/variables
+- Module deletion safety checklist for preventing cascading breakage
+- Systematic renaming process with IDE tooling and verification steps
+- Prevents common refactoring mistakes (incomplete renames, breaking imports, missed test updates)
+
+### Improvements
+
+**Enhanced brainstorming skill**
+
+Added UI consistency audit to Phase 2 (Requirements Refinement):
+- Systematic check for design system alignment before implementation
+- Component reuse verification to prevent duplication
+- State management consistency checks
+- Routing pattern validation
+- Prevents divergent UX patterns and wasted reimplementation effort
+
+**Enhanced writing-plans skill**
+
+Added test assertion quality guidance:
+- Structure expectations clearly in test plans
+- Distinguish test structure from production code structure
+- Guide toward meaningful assertions over mechanical coverage
+- Prevent brittle tests that break on refactoring
+
+**Source learnings:**
+- `docs/learnings/2026-01-30-module-deletion-safety-checklist.md`
+- `docs/learnings/2026-01-30-ui-consistency-patterns.md`
+- `docs/learnings/2026-01-30-test-assertion-quality-in-plans.md`
+
 ## v4.3.0 (2026-01-30)
 
 ### Improvements
