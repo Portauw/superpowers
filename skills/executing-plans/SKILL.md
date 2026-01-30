@@ -19,9 +19,13 @@ Load plan, review critically, execute tasks in batches, report for review betwee
 1. Read plan file
 2. Review critically - identify any questions or concerns about the plan
 3. If concerns: Raise them with your human partner before starting
-4. If no concerns: Create TodoWrite and proceed
+4. **Check for parallel execution signals:**
+   - Look for handoff documents (EXECUTION_SESSION.md, README.md in worktree)
+   - Keywords: "parallel execution", "independent tasks", "can run simultaneously"
+   - If found AND tasks have no dependencies: Use `dispatching-parallel-agents` instead
+5. If no parallel signals or dependencies exist: Create TodoWrite and proceed with sequential execution
 
-### Step 2: Execute Batch
+### Step 2: Execute Batch (Sequential)
 **Default: First 3 tasks**
 
 For each task:
