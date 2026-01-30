@@ -122,7 +122,7 @@ Fetch and follow instructions from https://raw.githubusercontent.com/obra/superp
 - **using-superpowers** - Introduction to the skills system
 
 **Meta-Learning**
-- **ai-self-reflection** - Automatic mistake detection (user corrections, backtracking, repeated errors)
+- **ai-self-reflecting** - Automatic mistake detection (user corrections, backtracking, repeated errors)
 - **compound-learning** - Quick 30-second capture after solving problems
 - **meta-learning-review** - Pattern detection, skill gap analysis, learning decay management (auto-archives stale knowledge after 6 months)
 
@@ -130,7 +130,7 @@ Fetch and follow instructions from https://raw.githubusercontent.com/obra/superp
 
 ```bash
 # Analyze session for mistakes and capture learnings automatically
-/ai-self-reflection
+/ai-self-reflect
 
 # After fixing a problem (triggered by verification-before-completion)
 /compound

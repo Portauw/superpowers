@@ -188,7 +188,7 @@ After completing ANY skill:
 | `systematic-debugging`           | `verification-before-completion`                                                     | Fix implemented                                                            |
 | `verification-before-completion` | `finishing-a-development-branch`                                                     | All tests pass                                                             |
 | `requesting-code-review`         | `finishing-a-development-branch`                                                     | Feedback addressed                                                         |
-| `finishing-a-development-branch` | `ai-self-reflection` OR `compound-learning`                                          | Work integrated, capture learnings                                         |
+| `finishing-a-development-branch` | `ai-self-reflecting` OR `compound-learning`                                          | Work integrated, capture learnings                                         |
 
 **Format for suggestions:**
 ```

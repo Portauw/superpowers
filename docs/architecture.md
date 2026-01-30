@@ -17,7 +17,7 @@ graph TB
     User -->|/simplify| CmdSimplify["/simplify command"]
     User -->|/compound| CmdCompound["/compound command"]
     User -->|/review-learnings| CmdReviewLearnings["/review-learnings command"]
-    User -->|/ai-self-reflection| CmdAiReflection["/ai-self-reflection command"]
+    User -->|/ai-self-reflect| CmdAiReflection["/ai-self-reflect command"]
 
     %% Skill Discovery
     CC -->|uses| SkillsCore["lib/skills-core.js<br/>• findSkillsInDir<br/>• resolveSkillPath<br/>• extractFrontmatter"]
@@ -63,7 +63,7 @@ graph TB
     end
 
     subgraph MetaLearningPhase[Meta-Learning Skills]
-        AiReflection[ai-self-reflection<br/>automatic mistake detection]
+        AiReflection[ai-self-reflecting<br/>automatic mistake detection]
         CompoundLearning[compound-learning<br/>quick learning capture]
         MetaLearningReview[meta-learning-review<br/>pattern detection + skill suggestions]
     end
@@ -190,7 +190,7 @@ sequenceDiagram
     CC->>U: Show verification results
 
     opt After verification
-        CC->>S: Load ai-self-reflection skill
+        CC->>S: Load ai-self-reflecting skill
         S-->>CC: Skill content
         CC->>CC: Analyze session for mistakes
         CC->>CC: Capture learnings automatically
@@ -236,7 +236,7 @@ graph TB
             C4[simplify.md]
             C5[compound.md]
             C6[review-learnings.md]
-            C7[ai-self-reflection.md]
+            C7[ai-self-reflect.md]
         end
 
         subgraph Skills["skills/"]
@@ -255,7 +255,7 @@ graph TB
             S13[verification-before-completion/SKILL.md]
             S14[documenting-completed-implementation/SKILL.md]
             S15[finishing-a-development-branch/SKILL.md]
-            S16[ai-self-reflection/SKILL.md]
+            S16[ai-self-reflecting/SKILL.md]
             S17[compound-learning/SKILL.md]
             S18[meta-learning-review/SKILL.md]
             S19[writing-skills/SKILL.md]

@@ -1,6 +1,6 @@
 # AI Self-Reflection Reference
 
-Detailed implementation guide for the ai-self-reflection skill.
+Detailed implementation guide for the ai-self-reflecting skill.
 
 ## AskUserQuestion Templates
 
@@ -326,7 +326,7 @@ git commit -m "docs: capture AI self-reflection learnings"
 
 **User skips all:**
 ```
-Learnings not captured. You can run /ai-self-reflection again later.
+Learnings not captured. You can run /ai-self-reflecting again later.
 ```
 
 **Git not available:**

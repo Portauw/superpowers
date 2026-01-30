@@ -234,13 +234,13 @@ From 24 failure memories:
 
 Reflect on this session and capture learnings? (optional)
 
-1. Yes - use ai-self-reflection
+1. Yes - use ai-self-reflecting
 2. No - skip
 ```
 
-If yes: Invoke ai-self-reflection skill.
+If yes: Invoke ai-self-reflecting skill.
 
-Note: You can also manually trigger retrospection later with `/ai-self-reflection` command.
+Note: You can also manually trigger retrospection later with `/ai-self-reflect` command.
 
 ## The Bottom Line
 

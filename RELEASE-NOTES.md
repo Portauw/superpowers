@@ -1,5 +1,45 @@
 # Superpowers Release Notes
 
+## v4.3.0 (2026-01-30)
+
+### Improvements
+
+**Naming convention alignment for ai-self-reflection**
+
+Renamed command and skill to follow the established naming pattern used by other skills (brainstorm→brainstorming, write-plan→writing-plans, execute-plan→executing-plans):
+
+- Command renamed: `/ai-self-reflection` → `/ai-self-reflect` (imperative verb form)
+- Skill renamed: `ai-self-reflection` → `ai-self-reflecting` (gerund/noun form)
+
+**Why this change:**
+- Eliminates namespace collision between command and skill that prevented Claude from invoking the skill automatically
+- Follows consistent pattern: command uses imperative verb, skill uses gerund form
+- Command remains user-only (`disable-model-invocation: true`), skill is Claude-invokable
+- Fixes error: "Skill superpowers:ai-self-reflection cannot be used with Skill tool due to disable-model-invocation"
+
+**Files updated:**
+- `commands/ai-self-reflection.md` → `commands/ai-self-reflect.md` - Command file renamed
+- `skills/ai-self-reflection/` → `skills/ai-self-reflecting/` - Skill directory renamed
+- `skills/ai-self-reflecting/SKILL.md` - Frontmatter name field updated
+- `skills/ai-self-reflecting/reference.md` - All internal references updated
+- `skills/verification-before-completion/SKILL.md` - Skill and command references
+- `skills/using-superpowers/SKILL.md` - Workflow chain table
+- `CLAUDE.md` - Workflow chain and skills list (2 locations)
+- `README.md` - Meta-learning section and command examples
+- `docs/architecture.md` - Mermaid diagrams (5 locations)
+- `tests/claude-code/test-ai-self-reflection.sh` - Test file paths and assertions
+
+**Migration:**
+- Update `/ai-self-reflection` → `/ai-self-reflect` in any scripts or documentation
+- Update `superpowers:ai-self-reflection` → `superpowers:ai-self-reflecting` in any code
+- No functional changes to the skill workflow itself
+
+**Benefits:**
+- Claude can now invoke the skill automatically during workflows
+- Users retain manual control via `/ai-self-reflect` command
+- Consistent naming pattern across all skills
+- Eliminates confusion from namespace collision
+
 ## v4.2.0 (2026-01-30)
 
 ### New Features
@@ -14,9 +54,9 @@
 
 ### Improvements
 
-**Simplified ai-self-reflection workflow**
+**Simplified ai-self-reflecting workflow**
 
-Removed counter tracking mechanism from ai-self-reflection skill to reduce complexity and improve usability.
+Removed counter tracking mechanism from ai-self-reflecting skill to reduce complexity and improve usability.
 
 **Why this change:**
 - Context matters more than counts for triggering learning reviews
@@ -32,8 +72,8 @@ Removed counter tracking mechanism from ai-self-reflection skill to reduce compl
 - Simplified reference.md by removing Meta-Learning Integration section
 
 **Skills updated:**
-- `skills/ai-self-reflection/SKILL.md` - Workflow simplified from 7 to 6 steps
-- `skills/ai-self-reflection/reference.md` - Removed counter tracking documentation
+- `skills/ai-self-reflecting/SKILL.md` - Workflow simplified from 7 to 6 steps
+- `skills/ai-self-reflecting/reference.md` - Removed counter tracking documentation
 - `skills/releasing-versions/SKILL.md` - New skill added
 
 **Benefits:**
@@ -43,7 +83,7 @@ Removed counter tracking mechanism from ai-self-reflection skill to reduce compl
 - User controls when to review learnings based on actual need
 
 **Source learning:**
-- `docs/learnings/2026-01-28-ai-self-reflection-counter-no-longer-useful.md`
+- `docs/learnings/2026-01-28-ai-self-reflecting-counter-no-longer-useful.md`
 
 ## v4.1.9 (2026-01-29)
 
@@ -77,14 +117,14 @@ Fixed workflow chain to establish plan before creating workspace. Previously sug
 
 **Documentation and command consolidation**
 
-- **Removed `/retrospective` command** - Consolidated to single `/ai-self-reflection` command
-  - `/retrospective` was a redundant alias for `/ai-self-reflection`
+- **Removed `/retrospective` command** - Consolidated to single `/ai-self-reflect` command
+  - `/retrospective` was a redundant alias for `/ai-self-reflect`
   - Reduces confusion by having one canonical way to trigger AI self-reflection
   - Updated all references across skills, documentation, and release notes
 
 - **Updated architecture.md** - Brought documentation current with v4.1.7+ features
-  - Added missing skills: `code-simplification`, `ai-self-reflection`, `meta-learning-review`, `compound-learning`, `dispatching-parallel-agents`
-  - Added missing commands: `/simplify`, `/compound`, `/review-learnings`, `/ai-self-reflection`
+  - Added missing skills: `code-simplification`, `ai-self-reflecting`, `meta-learning-review`, `compound-learning`, `dispatching-parallel-agents`
+  - Added missing commands: `/simplify`, `/compound`, `/review-learnings`, `/ai-self-reflect`
   - Updated workflow chain to include optional quality and meta-learning steps
   - Added new MetaLearningPhase section to skill organization
   - Updated sequence diagram with code simplification and learning capture steps
@@ -94,10 +134,10 @@ Fixed workflow chain to establish plan before creating workspace. Previously sug
 
 ### Improvements
 
-**Simplified ai-self-reflection command**
+**Simplified ai-self-reflecting command**
 
-- Removed redundant description and metadata from `/ai-self-reflection` command
-- Command now simply invokes `superpowers:ai-self-reflection` skill directly
+- Removed redundant description and metadata from `/ai-self-reflect` command
+- Command now simply invokes `superpowers:ai-self-reflecting` skill directly
 - Cleaner command definition using `disable-model-invocation: true`
 
 ## v4.1.6 (2026-01-28)
@@ -138,7 +178,7 @@ This release maintains all custom features from v4.1.5 (code simplification, AI 
 
 **Investigation-before-categorization pattern across multiple skills**
 
-Based on learnings from ai-self-reflection analysis, enhanced four core skills to emphasize investigating test failures and errors before categorizing them:
+Based on learnings from ai-self-reflecting analysis, enhanced four core skills to emphasize investigating test failures and errors before categorizing them:
 
 - **systematic-debugging (Phase 1)** - Added emphasis: "Don't trust error messages at face value - they describe symptoms, not root causes"
   - Verify error claims (e.g., "file not found" - check if file exists elsewhere, wrong path, permissions)
@@ -167,7 +207,7 @@ Based on learnings from ai-self-reflection analysis, enhanced four core skills t
 
 **using-superpowers skill enhancements**
 
-Based on meta-learning feedback from ai-self-reflection usage, added two critical sections to the using-superpowers skill (auto-loaded in every session):
+Based on meta-learning feedback from ai-self-reflecting usage, added two critical sections to the using-superpowers skill (auto-loaded in every session):
 
 - **Executing Skills** - Discipline for following loaded skill content
   - Read skill completely before starting
@@ -186,9 +226,9 @@ Based on meta-learning feedback from ai-self-reflection usage, added two critica
 
 ### New Features
 
-**ai-self-reflection skill - Automatic Mistake Detection and Learning Capture**
+**ai-self-reflecting skill - Automatic Mistake Detection and Learning Capture**
 
-Superpowers can now automatically detect mistakes during development sessions and capture them as structured learnings. The ai-self-reflection skill analyzes conversations for three types of mistakes:
+Superpowers can now automatically detect mistakes during development sessions and capture them as structured learnings. The ai-self-reflecting skill analyzes conversations for three types of mistakes:
 
 - **User corrections** - Detects when users correct AI assumptions (negations, "use X not Y" patterns)
 - **Backtracking** - Identifies when AI confidently states an approach but then needs to pivot after failure
@@ -199,18 +239,18 @@ Superpowers can now automatically detect mistakes during development sessions an
 - Shows summary of detected learnings with bulk confirmation
 - Creates YAML-frontmatter learning files with `source: ai-detected` field
 - Integrates with meta-learning-review for pattern detection
-- Manual trigger via `/ai-self-reflection` command
+- Manual trigger via `/ai-self-reflect` command
 - Optional automatic trigger after `verification-before-completion`
 
 **Integration:**
-- Modified `verification-before-completion` skill to suggest ai-self-reflection after completion
+- Modified `verification-before-completion` skill to suggest ai-self-reflecting after completion
 - Learning files compatible with existing meta-learning infrastructure
 - Feeds into pattern detection for skill suggestions
 
 ### Improvements
 
 - Learning analyzer now handles `source`, `type`, and `confidence` fields in frontmatter
-- Added `/ai-self-reflection` command for manual triggering
+- Added `/ai-self-reflect` command for manual triggering
 
 ## v4.0.6 (2026-01-11)
 

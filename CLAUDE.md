@@ -202,7 +202,7 @@ Core skills trigger in sequence:
 7. `code-simplification` → Optional code cleanup via code-simplifier agent (if substantial changes)
 8. `requesting-code-review` → Quality verification
 9. `verification-before-completion` → Ensure fixes actually work
-10. `ai-self-reflection` → Automatic mistake detection and learning capture (optional after verification)
+10. `ai-self-reflecting` → Automatic mistake detection and learning capture (optional after verification)
 11. `documenting-completed-implementation` → Update project documentation
 12. `finishing-a-development-branch` → Integration decisions (merge/PR/cleanup)
 
@@ -233,7 +233,7 @@ Core skills trigger in sequence:
 - `finishing-a-development-branch` - Invokes documenting skill, then handles git workflow (merge/PR/cleanup)
 
 **Meta-Learning**:
-- `ai-self-reflection` - Analyze session for mistakes (user corrections, backtracking, repeated errors), capture learnings automatically
+- `ai-self-reflecting` - Analyze session for mistakes (user corrections, backtracking, repeated errors), capture learnings automatically
 - `meta-learning-review` - Analyze learnings, detect patterns, suggest skills. Handles decay (archives stale knowledge). Triggered every 10 learnings or via /review-learnings.
 - `compound-learning` - Quick capture after verification. Builds searchable knowledge in docs/learnings/.
 
