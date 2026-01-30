@@ -1,30 +1,49 @@
 # Superpowers Release Notes
 
-## v5.0.0 (2026-01-29)
+## v4.2.0 (2026-01-30)
 
-### Breaking Changes
+### New Features
 
-**Renamed brainstorming skill and command**
+**releasing-versions skill** - Systematic version management
 
-- **Skill renamed:** `brainstorming` → `design-exploration`
-- **Command renamed:** `/brainstorm` → `/design`
+- New skill `releasing-versions` - Complete workflow for semantic versioning decisions, release notes, and publishing
+- Guides MAJOR/MINOR/PATCH decision making
+- Structured release notes templates
+- Git tagging and publishing checklist
+- Prevents common versioning mistakes
 
-**Why this change?**
+### Improvements
 
-The term "brainstorming" implied unstructured idea generation, which didn't accurately reflect the skill's systematic Socratic design refinement process. "Design exploration" better captures what the skill actually does: exploring requirements, validating assumptions, and refining designs before implementation.
+**Simplified ai-self-reflection workflow**
 
-**Migration:**
+Removed counter tracking mechanism from ai-self-reflection skill to reduce complexity and improve usability.
 
-- Users invoking `superpowers:brainstorming` must update to `superpowers:design-exploration`
-- Users using `/brainstorm` command must update to `/design`
-- All workflow documentation updated to reference new names
-- Skill content and behavior unchanged - only naming
+**Why this change:**
+- Context matters more than counts for triggering learning reviews
+- User can invoke `/review-learnings` when appropriate based on project phase
+- Counter tracking added unnecessary complexity (state management, threshold logic, additional git commits)
+- Learnings are already captured in `docs/learnings/` with YAML frontmatter
 
-**Files affected:**
-- Skills: `skills/brainstorming/` → `skills/design-exploration/`
-- Commands: `commands/brainstorm.md` → `commands/design.md`
-- Documentation: `CLAUDE.md`, `README.md`, `docs/architecture.md`
-- Related skills: `using-superpowers`, `finishing-a-development-branch`, `writing-plans`, `subagent-driven-development`
+**Changes:**
+- Removed Step 7 (counter increment and threshold check)
+- Updated Step 6 to commit learnings directly after executing actions
+- Removed counter references from Success Criteria
+- Removed `lib/meta-learning-state.js` reference from Integration section
+- Simplified reference.md by removing Meta-Learning Integration section
+
+**Skills updated:**
+- `skills/ai-self-reflection/SKILL.md` - Workflow simplified from 7 to 6 steps
+- `skills/ai-self-reflection/reference.md` - Removed counter tracking documentation
+- `skills/releasing-versions/SKILL.md` - New skill added
+
+**Benefits:**
+- Simpler workflow (one fewer step)
+- No state tracking across sessions
+- No artificial threshold triggering
+- User controls when to review learnings based on actual need
+
+**Source learning:**
+- `docs/learnings/2026-01-28-ai-self-reflection-counter-no-longer-useful.md`
 
 ## v4.1.9 (2026-01-29)
 

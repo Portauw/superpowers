@@ -308,27 +308,13 @@ SLUG=$(echo "$SUMMARY" | tr '[:upper:]' '[:lower:]' | sed 's/[^a-z0-9]/-/g' | se
 FILE="~/Dev/superpowers/docs/learnings/${DATE}-${SLUG}.md"
 ```
 
-## Meta-Learning Integration
+## Committing Learnings
 
-**Increment counter:**
-
-```bash
-node ~/Dev/superpowers/lib/meta-learning-state.js record
-COUNT=$(node ~/Dev/superpowers/lib/meta-learning-state.js count)
-```
-
-**Check for trigger:**
-
-If count reaches 10:
-```
-💡 10 learnings captured! Run /review-learnings to detect patterns.
-```
-
-**Commit learnings:**
+After writing learnings to docs/learnings/, commit them:
 
 ```bash
-git add ~/Dev/superpowers/docs/learnings/*.md
-git commit -m "docs: capture AI self-reflection learnings from session"
+git add docs/learnings/*.md CLAUDE.md
+git commit -m "docs: capture AI self-reflection learnings"
 ```
 
 ## Error Handling

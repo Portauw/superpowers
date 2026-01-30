@@ -92,15 +92,12 @@ See reference.md for full option definitions and AskUserQuestion template.
 **Save all/Skip all:**
 - Write all to docs/learnings/ or exit
 
-**7. Increment Counter and Commit**
+**Commit learnings:**
 
 ```bash
-node lib/meta-learning-state.js record
-git add docs/learnings/*.md
+git add docs/learnings/*.md CLAUDE.md
 git commit -m "docs: capture AI self-reflection learnings"
 ```
-
-If counter reaches 10: Suggest `/review-learnings`
 
 ## Mistake Detection Quick Reference
 
@@ -187,8 +184,7 @@ See reference.md for detailed procedures. High-level:
 - ✅ Offers six handling options
 - ✅ Implements category-appropriate actions (CLAUDE.md, skills, or save only)
 - ✅ Writes learnings with source:ai-detected and category field
-- ✅ Increments counter and commits
-- ✅ Suggests meta-learning-review at 10 learnings
+- ✅ Commits learnings with clear commit message
 
 ## Integration
 
@@ -200,5 +196,4 @@ See reference.md for detailed procedures. High-level:
 - meta-learning-review (analyzes ai-detected learnings by category)
 
 **Uses:**
-- lib/meta-learning-state.js (counter tracking)
 - docs/learnings/ (storage with YAML frontmatter and category field)
