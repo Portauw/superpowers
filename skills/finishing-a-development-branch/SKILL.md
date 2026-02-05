@@ -197,7 +197,65 @@ git merge <feature-branch>
 # Verify tests on merged result
 <test command>
 
-# If tests pass
+# If tests pass, proceed to post-merge verification
+```
+
+Then: Post-merge verification (Step 5.5)
+
+#### Step 5.5: Post-Merge Verification
+
+**CRITICAL: After merging from worktree, verify integration with base branch.**
+
+Worktree verification only tests branch isolation. Base branch may have evolved with:
+- Updated dependencies (package.json, Cargo.toml, go.mod)
+- Changed types/interfaces in shared code
+- New API signatures or breaking changes
+
+```bash
+# 1. Sync dependencies (project-specific command)
+npm install       # Node.js
+# pnpm install    # pnpm projects
+# cargo build     # Rust
+# go mod download # Go
+
+# 2. Re-run build if project has build step
+npm run build     # or pnpm build, yarn build, etc.
+
+# 3. Re-run tests on merged code
+<test command from Step 2>
+```
+
+**If build or tests fail:**
+```
+❌ Post-merge integration issues detected
+
+[Show error output - first 20 lines]
+
+These failures indicate the base branch evolved while you worked in the worktree.
+
+Common causes:
+- Missing dependencies added to base branch
+- Type mismatches (outdated JSDoc, interface changes)
+- API signature updates in shared code
+- New peer dependencies
+
+Fix the issues, then re-verify before proceeding.
+```
+
+Stop workflow. Do not delete branch or cleanup worktree until fixed.
+
+**If all checks pass:**
+```
+✅ Post-merge verification complete
+   - Dependencies synced
+   - Build successful (if applicable)
+   - All tests passing on merged code
+
+Proceeding with branch cleanup.
+```
+
+**Delete feature branch:**
+```bash
 git branch -d <feature-branch>
 ```
 
@@ -311,6 +369,7 @@ git worktree remove <worktree-path>
 |---------|-----|
 | **Skip documentation** | Step 1 is REQUIRED if plan exists. Invoke documenting-completed-implementation first. |
 | **Skip test verification** | Merge broken code, create failing PR |
+| **Skip post-merge verification** | Worktree tests pass but merged code fails (base branch evolved) - Step 5.5 catches this |
 | **Open-ended questions** | "What should I do next?" → ambiguous. Present 5 structured options. |
 | **Automatic worktree cleanup** | Remove worktree when might need it (Options 2, 3, 4) |
 | **No confirmation for discard** | Accidentally delete work |
@@ -321,12 +380,14 @@ git worktree remove <worktree-path>
 - Skip documentation if plan exists (invoke documenting-completed-implementation)
 - Proceed with failing tests
 - Merge without verifying tests on result
+- Skip post-merge verification (Step 5.5) - base branch may have evolved
 - Delete work without confirmation
 - Force-push without explicit request
 
 **Always:**
 - Invoke documenting-completed-implementation first (if plan exists)
 - Verify tests before offering options
+- Run post-merge verification (sync deps, rebuild, retest) after Option 1 merge
 - Present exactly 5 options
 - Get typed confirmation for Option 5
 - Clean up worktree for Options 1, 3 & 5 only
