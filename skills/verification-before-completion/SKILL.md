@@ -40,20 +40,37 @@ If you haven't run the verification command in this message, you cannot claim it
 ```
 BEFORE claiming any status or expressing satisfaction:
 
+0. BUILD CHECK (TypeScript/compiled projects only):
+   - If project has build step (TypeScript, Next.js, compiled code):
+     → RUN build command FIRST (pnpm build, npm run build, etc.)
+     → READ full output, verify "✓ Compiled successfully"
+     → If build fails, STOP - cannot proceed to other checks
+   - Skip this step ONLY if no build step exists (pure JS, Python, etc.)
+
 1. IDENTIFY: What command proves this claim?
+   - Tests? → test command
+   - Functionality? → runtime test
+   - Infrastructure? → AWS/cloud verification commands
+
 2. RUN: Execute the FULL command (fresh, complete)
+
 3. READ: Full output, check exit code, count failures
+
 4. INVESTIGATE: Before interpreting failures/errors:
    - Don't trust error messages at face value (symptoms ≠ root cause)
    - Verify error claims (e.g., "file not found" - check if exists elsewhere)
    - Check paths, permissions, environment before categorizing
+
 5. VERIFY: Does output confirm the claim?
    - If NO: State actual status with evidence
    - If YES: State claim WITH evidence
+
 6. ONLY THEN: Make the claim
 
 Skip any step = lying, not verifying
 ```
+
+**Build verification is step 0 because:** TypeScript errors prevent everything else from working. Catch them before CI does.
 
 ## Verification Types and Commands
 
@@ -151,11 +168,13 @@ pnpm build
 - Using "should", "probably", "seems to"
 - Expressing satisfaction before verification ("Great!", "Perfect!", "Done!", etc.)
 - About to commit/push/PR without verification
+- **About to push TypeScript changes without running build**
 - Trusting agent success reports
 - Relying on partial verification
 - Thinking "just this once"
 - Tired and wanting work over
 - **ANY wording implying success without having run verification**
+- **Thinking "it's a simple change" in TypeScript projects**
 
 ## Rationalization Prevention
 
@@ -169,6 +188,11 @@ pnpm build
 | "I'm tired" | Exhaustion ≠ excuse |
 | "Partial check is enough" | Partial proves nothing |
 | "Different words so rule doesn't apply" | Spirit over letter |
+| "Simple change, build not needed" | ALL TypeScript changes need build check |
+| "Just added optional field" | Optional fields can still break compilation |
+| "It's just types, no logic" | Type errors break builds |
+| "CI will catch it" | CI is backup, not primary verification |
+| "Already pushed, will fix next" | Build BEFORE push, always |
 
 ## Key Patterns
 
