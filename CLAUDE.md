@@ -195,6 +195,7 @@ Skills are discovered through:
 
 Core skills trigger in sequence:
 1. `brainstorming` → Design exploration and validation
+1b. `outgoing-api-design` → API integration design (if APIs identified during brainstorming)
 2. `writing-plans` → Detailed implementation planning
 3. `using-git-worktrees` → Isolated workspace creation
 4. `subagent-driven-development` or `executing-plans` → Task execution

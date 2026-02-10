@@ -118,6 +118,7 @@ Recognize these user phrases as skill invocation triggers:
 | "add feature X", "implement Y" | `brainstorming` first | Design decisions before implementation |
 | "plan this out", "how should we approach this" | `writing-plans` | Multi-step tasks need structured planning |
 | "is this ready to merge", "can we ship this" | `verification-before-completion` | Claims require evidence |
+| "call this API", "integrate with X", "connect to a service" | `outgoing-api-design` | API integrations need resilience and abstraction design before code |
 | "clean this up", "simplify the code", "make this cleaner" | `code-simplification` | Code quality improvement via code-simplifier agent |
 
 **Exception:** Only skip skill if user explicitly says "skip the workflow" or "just commit it".
@@ -179,7 +180,8 @@ After completing ANY skill:
 
 | After This Skill                 | Suggest This Next                                                                    | When                                                                       |
 |----------------------------------|--------------------------------------------------------------------------------------|----------------------------------------------------------------------------|
-| `brainstorming`                  | `writing-plans`                                                                      | Design is validated and ready for implementation                           |
+| `brainstorming`                  | `outgoing-api-design` OR `writing-plans`                                             | Use outgoing-api-design if APIs identified, otherwise writing-plans        |
+| `outgoing-api-design`            | `writing-plans`                                                                      | API design decisions complete, ready for implementation planning           |
 | `writing-plans`                  | `using-git-worktrees` - > Choice: `executing-plans` OR `subagent-driven-development` | Plan is complete, ask which execution approach                             |
 | `executing-plans`                | `code-simplification` (optional) → `verification-before-completion`                  | All tasks complete; offer simplification if 5+ files or 100+ lines changed |
 | `subagent-driven-development`    | `code-simplification` (optional) → `verification-before-completion`                  | All tasks complete; offer simplification if 5+ files or 100+ lines changed |

@@ -175,6 +175,9 @@ Key: User context is ALWAYS included (never overridden)
 - Use elements-of-style:writing-clearly-and-concisely skill if available
 - Commit the design document to git
 
+**API integrations identified?**
+- If the design involves calling external APIs or internal microservices, suggest: "Use `superpowers:outgoing-api-design` to design the integration layer before planning implementation."
+
 **Implementation (if continuing):**
 - Ask: "Ready to create the implementation plan?"
 - Use superpowers:writing-plans to create detailed implementation plan
