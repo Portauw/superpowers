@@ -1,5 +1,52 @@
 # Superpowers Release Notes
 
+## v4.5.0 (2026-02-10)
+
+### New Skills
+
+**clean-software-design** — Cross-cutting quality gate for DDD, clean architecture, SOLID, and clean code
+
+- Integrates as checkpoints into brainstorming, planning, execution, review, and verification skills
+- Includes comprehensive reference guide with principles and anti-patterns
+- Enforces design quality throughout the entire workflow chain
+
+**outgoing-api-design** — Design outgoing API integrations before writing code
+
+- Triage checklist for third-party and microservice API calls
+- Guided deep dive for complex integrations
+- Produces structured design documents
+
+**typescript-javascript-interop** — TypeScript compilation patterns for untyped sources
+
+- Type assertions for CommonJS interop
+- Safe nested property access patterns
+- Covers objects from JavaScript modules, external APIs, and untyped sources
+
+### Improvements
+
+**Build verification enforcement**
+
+- Added TypeScript build verification to the Gate Function in `verification-before-completion`
+- Prevents claiming completion when TypeScript compilation fails
+
+**Post-merge verification in finishing-a-development-branch**
+
+- Added verification step after merge to confirm build and tests still pass
+- Catches integration issues immediately rather than leaving them for the next session
+
+**Clean software design integration across workflow**
+
+- `brainstorming` — Design principles checkpoint during requirements refinement
+- `writing-plans` — Architecture review checkpoint in plans
+- `executing-plans` — Quality gate during task execution
+- `subagent-driven-development` — Quality gate during parallel execution
+- `requesting-code-review` — Design review checklist item
+
+**Other**
+
+- Fixed YAML compatibility issue with quoted SKILL.md descriptions
+- Added documenting skill to workflow
+
 ## v4.4.0 (2026-01-30)
 
 ### New Features
