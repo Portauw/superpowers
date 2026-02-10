@@ -7,10 +7,7 @@ source "$(dirname "$0")/test-helpers.sh"
 # Setup a test repo with a project that has NO architectural-principles.md
 setup_test_project() {
     local test_dir=$(create_test_project)
-    cd "$test_dir"
-    git init -q
-    git config user.email "test@example.com"
-    git config user.name "Test User"
+    (cd "$test_dir" && git init -q && git config user.email "test@example.com" && git config user.name "Test User")
 
     # Create a CLAUDE.md with no architecture reference
     cat > "$test_dir/CLAUDE.md" << 'EOF'
@@ -36,8 +33,7 @@ function createOrder(userId, items) {
 module.exports = { createOrder };
 EOF
 
-    git add -A
-    git commit -q -m "Initial commit"
+    (cd "$test_dir" && git add -A && git commit -q -m "Initial commit")
     echo "$test_dir"
 }
 
@@ -63,7 +59,7 @@ The app currently has an order service. Let's brainstorm how to build this."
     echo "$response" | grep -qi "ubiquitous language" && ddd_mentions=$((ddd_mentions + 1))
     echo "$response" | grep -qi "aggregate" && ddd_mentions=$((ddd_mentions + 1))
     echo "$response" | grep -qi "quality attribute" && ddd_mentions=$((ddd_mentions + 1))
-    echo "$response" | grep -qi "architectural.principles" && ddd_mentions=$((ddd_mentions + 1))
+    echo "$response" | grep -qi "architectural\.principles" && ddd_mentions=$((ddd_mentions + 1))
 
     echo "DDD concept mentions: $ddd_mentions / 5"
 
@@ -127,7 +123,7 @@ Before I write code, is there anything I should set up or document first?"
     echo "$response" | head -30
     echo ""
 
-    if echo "$response" | grep -qi "architectural.principles\|architecture.*doc\|principles.*file"; then
+    if echo "$response" | grep -qi "architectural\.principles\|architecture.*doc\|principles.*file"; then
         echo "NOTE: Agent suggested architectural documentation without skill"
     else
         echo "BASELINE: Agent did not suggest architectural principles documentation (expected)"
