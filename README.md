@@ -106,9 +106,12 @@ Fetch and follow instructions from https://raw.githubusercontent.com/obra/superp
 - **systematic-debugging** - 4-phase root cause process (includes root-cause-tracing, defense-in-depth, condition-based-waiting techniques)
 - **verification-before-completion** - Ensure it's actually fixed
 
-**Collaboration** 
+**Design**
 - **brainstorming** - Socratic design refinement
+- **outgoing-api-design** - Design outgoing API integrations before writing code
 - **writing-plans** - Detailed implementation plans
+
+**Collaboration**
 - **executing-plans** - Batch execution with checkpoints
 - **dispatching-parallel-agents** - Concurrent subagent workflows
 - **requesting-code-review** - Pre-review checklist

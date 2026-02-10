@@ -1,5 +1,9 @@
 # Skill Design: Outgoing API Integration Design
 
+> **Status:** ✅ COMPLETED - 2026-02-10
+>
+> **Implementation:** New skill at skills/outgoing-api-design/SKILL.md. Guides developers through triage checklist, guided deep dive with pattern tables, and design document output for outgoing API integrations.
+
 ## Purpose
 
 A skill that guides developers through designing outgoing API integrations — both third-party APIs and internal microservice calls — before writing integration code. Prevents tight coupling and missing resilience patterns.
