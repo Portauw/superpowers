@@ -99,7 +99,8 @@ Fetch and follow instructions from https://raw.githubusercontent.com/obra/superp
 
 ### Skills Library
 
-**Testing**
+**Quality & Testing**
+- **clean-software-design** - Cross-cutting DDD, clean architecture, SOLID, clean code quality gate (invoked by other skills at checkpoints)
 - **test-driven-development** - RED-GREEN-REFACTOR cycle (includes testing anti-patterns reference)
 
 **Debugging**
