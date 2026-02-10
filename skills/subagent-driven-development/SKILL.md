@@ -235,6 +235,7 @@ Done!
 
 **Subagents should use:**
 - **superpowers:test-driven-development** - Subagents follow TDD for each task
+- **superpowers:clean-software-design** - Subagents verify implementation against architectural principles and clean code standards
 
 **Alternative workflow:**
 - **superpowers:executing-plans** - Use for parallel session instead of same-session execution

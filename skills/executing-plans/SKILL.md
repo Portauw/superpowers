@@ -76,5 +76,6 @@ After all tasks complete and verified:
 - Follow plan steps exactly
 - Don't skip verifications
 - Reference skills when plan says to
+- Check `architectural-principles.md` if present — use `clean-software-design` for compliance verification
 - Between batches: just report and wait
 - Stop when blocked, don't guess

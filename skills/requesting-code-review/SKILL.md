@@ -29,7 +29,11 @@ Dispatch superpowers:code-reviewer subagent to catch issues before they cascade.
 
 **Consider:** Use `superpowers:code-simplification` first if substantial changes (5+ files or 100+ lines). Cleaner code = faster, more focused review.
 
-### 2. Proactive Cleanup
+### 2. Architectural Compliance (Optional)
+
+**Consider:** Use `clean-software-design` to verify architectural compliance against `architectural-principles.md` before requesting review. Catches DDD violations, dependency direction issues, and SOLID breaches.
+
+### 3. Proactive Cleanup
 
 **After refactoring, scan for dead code:**
 
@@ -61,7 +65,7 @@ grep -r "integration" --include="*test*.js" packages/
 
 **Pattern:** Remove dead code/redundant files in the SAME commit as the refactoring, not separate cleanup commits.
 
-### 3. Validation Architecture Check
+### 4. Validation Architecture Check
 
 **For API endpoints with user input, verify validation is present:**
 
@@ -95,7 +99,7 @@ await lambda.invoke(data);   // ❌ Throws error
 - If validation fails downstream, would MongoDB contain invalid state?
 - If yes → move validation BEFORE persistence
 
-### 4. Red Flags
+### 5. Red Flags
 
 **If you find any of these, fix BEFORE requesting review:**
 - ❌ Functions exported but never called (grep finds no callers)

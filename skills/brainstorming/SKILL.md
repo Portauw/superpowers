@@ -153,6 +153,9 @@ Key: User context is ALWAYS included (never overridden)
 - Only one question per message - if a topic needs more exploration, break it into multiple questions
 - Focus on understanding: purpose, constraints, success criteria
 
+**Architectural principles check:**
+- Invoke `clean-software-design` to establish or verify architectural principles before exploring approaches
+
 **Exploring approaches:**
 - Propose 2-3 different approaches with trade-offs
 - Present options conversationally with your recommendation and reasoning
