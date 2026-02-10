@@ -1,6 +1,6 @@
 ---
 name: clean-software-design
-description: Use when starting implementation, designing architecture, writing code, or reviewing code quality — verifies DDD, clean architecture, SOLID, and clean code principles against project-specific architectural context
+description: "Use when starting implementation, designing architecture, writing code, or reviewing code quality - verifies DDD, clean architecture, SOLID, and clean code principles against project-specific architectural context"
 ---
 
 # Clean Software Design
