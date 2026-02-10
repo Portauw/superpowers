@@ -14,6 +14,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 Recent implementations (see docs/plans/completed/ for details):
 
+- **2026-02-10**: Clean Software Design - Cross-cutting quality gate skill enforcing DDD, clean architecture, SOLID, and clean code principles throughout the workflow (brainstorming, planning, execution, review)
 - **2026-02-10**: Outgoing API Design - Skill for designing outgoing API integrations (third-party and microservice calls) with triage checklist, guided deep dive, and design document output
 - **2026-01-14**: AI Self-Reflection - Automatic mistake detection skill that analyzes sessions for user corrections, backtracking, and repeated errors, capturing learnings with ai-detected source field
 - **2026-01-11**: Meta-Learning System - Self-learning system that captures knowledge after verification, detects patterns via tag clustering, suggests new skills, manages learning decay (6+ months auto-archive)
@@ -224,6 +225,7 @@ Core skills trigger in sequence:
 - `dispatching-parallel-agents` - Concurrent workflows for independent tasks
 
 **Quality & Testing**:
+- `clean-software-design` - Cross-cutting DDD, clean architecture, SOLID, clean code quality gate (invoked by other skills at checkpoints)
 - `test-driven-development` - RED-GREEN-REFACTOR cycle enforcement
 - `systematic-debugging` - 4-phase process with root-cause-tracing
 - `code-simplification` - Optional cleanup via code-simplifier agent (requires plugin)
