@@ -28,6 +28,8 @@ Load plan, review critically, execute tasks in batches, report for review betwee
 ### Step 2: Execute Batch (Sequential)
 **Default: First 3 tasks**
 
+**Architectural compliance:** If `architectural-principles.md` exists, use `clean-software-design` to verify implementation against architectural principles and clean code standards.
+
 For each task:
 1. Mark as in_progress
 2. Follow each step exactly (plan has bite-sized steps)
@@ -76,6 +78,5 @@ After all tasks complete and verified:
 - Follow plan steps exactly
 - Don't skip verifications
 - Reference skills when plan says to
-- Check `architectural-principles.md` if present — use `clean-software-design` for compliance verification
 - Between batches: just report and wait
 - Stop when blocked, don't guess

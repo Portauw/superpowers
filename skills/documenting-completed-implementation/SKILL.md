@@ -28,24 +28,22 @@ Use when ALL these are true:
 
 ## The Process
 
-```dot
-digraph doc_flow {
-    rankdir=TB;
-    "Plan complete?" [shape=diamond];
-    "Mark plan complete" [shape=box];
-    "Update CLAUDE.md" [shape=box];
-    "Update README.md" [shape=box];
-    "Move plan to completed/" [shape=box];
-    "Commit docs" [shape=box];
-    "Done" [shape=doublecircle];
+```mermaid
+flowchart TD
+    A{Plan complete?}
+    B[Mark plan complete]
+    C[Update CLAUDE.md]
+    D[Update README.md]
+    E["Move plan to completed/"]
+    F[Commit docs]
+    G(((Done)))
 
-    "Plan complete?" -> "Mark plan complete" [label="yes"];
-    "Mark plan complete" -> "Update CLAUDE.md";
-    "Update CLAUDE.md" -> "Update README.md";
-    "Update README.md" -> "Move plan to completed/";
-    "Move plan to completed/" -> "Commit docs";
-    "Commit docs" -> "Done";
-}
+    A -->|yes| B
+    B --> C
+    C --> D
+    D --> E
+    E --> F
+    F --> G
 ```
 
 ### Step 1: Mark Plan Complete

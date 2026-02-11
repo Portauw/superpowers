@@ -149,13 +149,6 @@ When working with skills that aren't behaving as expected:
 2. **GREEN**: Write skill addressing specific failures, verify with same scenarios
 3. **REFACTOR**: Close loopholes by adding explicit counters for new rationalizations
 
-**Render skill flowcharts**:
-```bash
-cd skills/writing-skills
-./render-graphs.js ../some-skill           # Individual diagrams
-./render-graphs.js ../some-skill --combine # Combined SVG
-```
-
 **Token usage analysis**:
 ```bash
 # Analyze a specific session transcript
@@ -270,7 +263,7 @@ Integration tests (`test-subagent-driven-development-integration.sh`) verify:
 - **Always** use TodoWrite for skill creation checklist
 - **Always** write description in third person starting with "Use when..."
 - Maximum 1024 chars for frontmatter (name + description)
-- Use graphviz flowcharts ONLY for non-obvious decisions
+- Use mermaid flowcharts ONLY for non-obvious decisions
 
 ### File Organization
 
@@ -299,12 +292,12 @@ Cross-reference other skills by name only, never use `@` syntax (force-loads fil
 
 ### Flowchart Usage
 
-Use `dot` format flowcharts for:
+Use `mermaid` format flowcharts for:
 - Non-obvious decision points
 - Process loops where agent might stop early
 - "When to use A vs B" decisions
 
-See `skills/writing-skills/graphviz-conventions.dot` for style rules.
+See `skills/writing-skills/mermaid-conventions.md` for style rules.
 
 ### Code Examples
 

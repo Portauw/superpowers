@@ -32,12 +32,12 @@ description: Use when verification-before-completion finishes or when analyzing 
 
 Assign each learning to one category:
 
-| Category | Criteria | Action |
-|----------|----------|--------|
-| **project-specific** | Project tools, file paths, tech stack patterns | Update CLAUDE.md |
-| **general-workflow** | Broadly applicable, development process, skill usage | Create/update skill |
-| **platform-issue** | Claude Code limitation, tool bugs, requires Anthropic fix | Save as reference, file feedback |
-| **reference** | Technical examples, useful but not workflow guidance | Save as reference |
+| Category             | Criteria                                                  | Action                           |
+|----------------------|-----------------------------------------------------------|----------------------------------|
+| **project-specific** | Project tools, file paths, tech stack patterns            | Update CLAUDE.md                 |
+| **general-workflow** | Broadly applicable, development process, skill usage      | Create/update skill              |
+| **platform-issue**   | Claude Code limitation, tool bugs, requires Anthropic fix | Save as reference, file feedback |
+| **reference**        | Technical examples, useful but not workflow guidance      | Save as reference                |
 
 **When uncertain:** Between project/general → choose general (broader). Between general/reference → ask "prevents mistakes?" → general; "useful example?" → reference.
 

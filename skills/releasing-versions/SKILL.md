@@ -23,21 +23,24 @@ Systematic version bumping with semantic versioning, comprehensive release notes
 
 Given version `MAJOR.MINOR.PATCH`:
 
-```dot
-digraph version_decision {
-    "Changes ready?" [shape=diamond];
-    "Breaking changes?" [shape=diamond];
-    "New features?" [shape=diamond];
-    "MAJOR bump" [shape=box, style=filled, fillcolor=orange];
-    "MINOR bump" [shape=box, style=filled, fillcolor=yellow];
-    "PATCH bump" [shape=box, style=filled, fillcolor=lightgreen];
+```mermaid
+flowchart TD
+    A{Changes ready?}
+    B{Breaking changes?}
+    C{New features?}
+    D[MAJOR bump]:::orange
+    E[MINOR bump]:::yellow
+    F[PATCH bump]:::green
 
-    "Changes ready?" -> "Breaking changes?" [label="yes"];
-    "Breaking changes?" -> "MAJOR bump" [label="yes"];
-    "Breaking changes?" -> "New features?" [label="no"];
-    "New features?" -> "MINOR bump" [label="yes"];
-    "New features?" -> "PATCH bump" [label="no"];
-}
+    A -->|yes| B
+    B -->|yes| D
+    B -->|no| C
+    C -->|yes| E
+    C -->|no| F
+
+    classDef orange fill:orange
+    classDef yellow fill:yellow
+    classDef green fill:lightgreen
 ```
 
 **MAJOR (X.0.0)** - Breaking changes:

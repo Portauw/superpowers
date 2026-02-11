@@ -23,8 +23,10 @@ When reviewing completed work, you will:
    - Look for potential security vulnerabilities or performance issues
 
 3. **Architecture and Design Review**:
+   - If the project has `architectural-principles.md` or `docs/architectural-principles.md`, use it as the primary reference for project-specific architectural standards (bounded contexts, ubiquitous language, quality attributes)
    - Ensure the implementation follows SOLID principles and established architectural patterns
    - Check for proper separation of concerns and loose coupling
+   - Verify dependency direction: domain ← application ← infrastructure (no framework leakage in domain layer)
    - Verify that the code integrates well with existing systems
    - Assess scalability and extensibility considerations
 

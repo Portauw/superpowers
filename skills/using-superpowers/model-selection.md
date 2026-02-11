@@ -9,15 +9,15 @@
 
 ## Planning Skills (Use SONNET)
 
-- `superpowers:writing-plans` → **Sonnet** - Structured planning, breaking down tasks, writing implementation steps
-- `superpowers:requesting-code-review` → **Sonnet** - Code analysis, quality assessment, suggesting improvements
+- `superpowers:writing-plans` → **Opus** - Structured planning, breaking down tasks, writing implementation steps
+- `superpowers:requesting-code-review` → **Opus** - Code analysis, quality assessment, suggesting improvements
 
 ## Execution Skills (Use HAIKU)
 
-- `superpowers:executing-plans` → **Haiku** - Following explicit plan instructions, mechanical implementation
-- `superpowers:subagent-driven-development` → **Haiku** - Task-by-task execution with supervision
-- `superpowers:test-driven-development` → **Haiku** - Writing tests and implementation following TDD pattern
-- `superpowers:verification-before-completion` → **Haiku** - Running tests, checking outputs
+- `superpowers:executing-plans` → **Sonnet** - Following explicit plan instructions, mechanical implementation
+- `superpowers:subagent-driven-development` → **Sonnet** - Task-by-task execution with supervision
+- `superpowers:test-driven-development` → **Sonnet** - Writing tests and implementation following TDD pattern
+- `superpowers:verification-before-completion` → **Sonnet** - Running tests, checking outputs
 
 ## Debugging Skills (Use SONNET)
 

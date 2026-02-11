@@ -1,5 +1,39 @@
 # Superpowers Release Notes
 
+## v4.6.0 (2026-02-11)
+
+### Improvements
+
+**Mermaid diagram migration**
+
+- Migrated all 12 graphviz/dot diagrams to mermaid across 9 skill files
+- Created `mermaid-conventions.md` style guide with color palette for flowcharts and sequence diagrams
+- Deleted `graphviz-conventions.dot` and `render-graphs.js` (no longer needed)
+
+**Architecture documentation overhaul**
+
+- Added 4 missing skills to architecture diagrams: outgoing-api-design, clean-software-design, safe-refactoring, releasing-versions
+- Added dedicated subagent-driven-development sequence diagram with color-coded phases and participant roles
+- Updated file organization to reflect all 23 skills, hooks, and lib files
+- Added clean-software-design invocation points to workflow sequence
+
+**Skills updated:**
+- `using-superpowers/SKILL.md` - Mermaid flowchart
+- `subagent-driven-development/SKILL.md` - Mermaid flowcharts
+- `test-driven-development/SKILL.md` - Mermaid flowchart
+- `releasing-versions/SKILL.md` - Mermaid flowchart
+- `documenting-completed-implementation/SKILL.md` - Mermaid flowchart
+- `dispatching-parallel-agents/SKILL.md` - Mermaid flowchart
+- `writing-skills/SKILL.md` - Mermaid flowcharts, updated references
+- `systematic-debugging/condition-based-waiting.md` - Mermaid flowchart
+- `systematic-debugging/root-cause-tracing.md` - Mermaid flowcharts
+- `CLAUDE.md` - Updated graphviz references to mermaid
+
+### Removals
+
+- Removed `typescript-javascript-interop` skill (deprecated)
+- Removed `graphviz-conventions.dot` and `render-graphs.js` (replaced by mermaid)
+
 ## v4.5.0 (2026-02-10)
 
 ### New Skills
@@ -15,12 +49,6 @@
 - Triage checklist for third-party and microservice API calls
 - Guided deep dive for complex integrations
 - Produces structured design documents
-
-**typescript-javascript-interop** — TypeScript compilation patterns for untyped sources
-
-- Type assertions for CommonJS interop
-- Safe nested property access patterns
-- Covers objects from JavaScript modules, external APIs, and untyped sources
 
 ### Improvements
 

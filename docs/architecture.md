@@ -35,6 +35,7 @@ graph TB
     %% Skills organized by phase
     subgraph DesignPhase[Design & Planning Skills]
         Brainstorming[brainstorming<br/>design exploration]
+        OutgoingApi[outgoing-api-design<br/>API integration design]
         WritingPlans[writing-plans<br/>implementation plan]
     end
 
@@ -50,7 +51,9 @@ graph TB
     end
 
     subgraph QualityPhase[Quality Skills]
+        CleanDesign[clean-software-design<br/>DDD/SOLID/clean arch quality gate]
         SystematicDebug[systematic-debugging<br/>4-phase process]
+        SafeRefactoring[safe-refactoring<br/>rename/delete with reference checks]
         CodeSimplification[code-simplification<br/>optional cleanup via agent]
         RequestingReview[requesting-code-review<br/>pre-review checklist]
         ReceivingReview[receiving-code-review<br/>feedback verification]
@@ -60,6 +63,7 @@ graph TB
     subgraph CompletionPhase[Completion Skills]
         Documenting[documenting-completed-implementation<br/>update docs/plan/commit]
         FinishingBranch[finishing-a-development-branch<br/>invokes documenting + git workflow]
+        ReleasingVersions[releasing-versions<br/>semver + release notes + tag]
     end
 
     subgraph MetaLearningPhase[Meta-Learning Skills]
@@ -73,7 +77,9 @@ graph TB
     end
 
     %% Main Workflow Chain
-    Brainstorming ==>|1. after design approval| WritingPlans
+    Brainstorming ==>|1a. if APIs identified| OutgoingApi
+    Brainstorming ==>|1b. otherwise| WritingPlans
+    OutgoingApi ==>|API design complete| WritingPlans
     WritingPlans ==>|2. plan complete| GitWorktrees
     GitWorktrees ==>|3. in clean workspace| SubagentDev
     GitWorktrees ==>|3. or batch mode| ExecutingPlans
@@ -87,7 +93,14 @@ graph TB
     RequestingReview ==>|all tasks done| FinishingBranch
     FinishingBranch -->|invokes if plan exists| Documenting
     FinishingBranch ==>|after completion| CompoundLearning
+    FinishingBranch -.->|if publishing| ReleasingVersions
     CompoundLearning -.->|every 10 learnings| MetaLearningReview
+
+    %% Cross-cutting quality gate (invoked at checkpoints by other skills)
+    CleanDesign -.->|checkpoint in| Brainstorming
+    CleanDesign -.->|checkpoint in| WritingPlans
+    CleanDesign -.->|checkpoint in| SubagentDev
+    CleanDesign -.->|checkpoint in| RequestingReview
 
     %% Agent System
     SubagentDev -->|spawns for review| CodeReviewer[agents/code-reviewer.md<br/>2-stage review:<br/>1. spec compliance<br/>2. code quality]
@@ -115,7 +128,7 @@ graph TB
 
     class User,CC userClass
     class Plugin,Hook,UsingSuperpowers pluginClass
-    class Brainstorming,WritingPlans,GitWorktrees,ExecutingPlans,SubagentDev,DispatchingAgents,TDD,SystematicDebug,CodeSimplification,RequestingReview,ReceivingReview,Verification,Documenting,FinishingBranch,AiReflection,CompoundLearning,MetaLearningReview,WritingSkills skillClass
+    class Brainstorming,OutgoingApi,WritingPlans,GitWorktrees,ExecutingPlans,SubagentDev,DispatchingAgents,TDD,CleanDesign,SystematicDebug,SafeRefactoring,CodeSimplification,RequestingReview,ReceivingReview,Verification,Documenting,FinishingBranch,ReleasingVersions,AiReflection,CompoundLearning,MetaLearningReview,WritingSkills skillClass
     class CodeReviewer,CodeSimplifierAgent agentClass
     class TestRunner,FastTests,IntegrationTests testClass
 ```
@@ -140,11 +153,22 @@ sequenceDiagram
     S-->>CC: Skill content
     CC->>U: Ask clarifying questions
     U->>CC: Answer questions
+    CC->>S: Load clean-software-design skill (strategic checks)
+    S-->>CC: Verify bounded contexts, ubiquitous language
     CC->>U: Present design in sections
     U->>CC: Approve design
 
+    opt APIs identified during brainstorming
+        CC->>S: Load outgoing-api-design skill
+        S-->>CC: Skill content
+        CC->>U: Present API integration design
+        U->>CC: Approve API design
+    end
+
     CC->>S: Load writing-plans skill
     S-->>CC: Skill content
+    CC->>S: Load clean-software-design skill (tactical checks)
+    S-->>CC: Verify dependency direction, layer separation
     CC->>U: Present implementation plan
     U->>CC: Approve plan
 
@@ -154,28 +178,8 @@ sequenceDiagram
 
     CC->>S: Load subagent-driven-development skill
     S-->>CC: Skill content
-
-    loop For each task
-        CC->>A: Spawn subagent with task
-        A->>A: Load test-driven-development skill
-        A->>A: Write test (RED)
-        A->>A: Write code (GREEN)
-        A->>A: Self-review
-        A-->>CC: Report completion
-
-        CC->>A: Spawn code-reviewer (spec compliance)
-        A->>A: Read spec + code independently
-        A-->>CC: Spec compliance review
-
-        CC->>A: Spawn code-reviewer (code quality)
-        A->>A: Review code quality
-        A-->>CC: Quality review
-
-        alt Issues found
-            CC->>A: Spawn subagent to fix issues
-            A-->>CC: Fixed
-        end
-    end
+    Note over CC,A: Per-task loop with 3 subagent types<br/>See "Subagent-Driven Development" diagram below
+    CC->>CC: Execute all tasks (implement → spec review → quality review each)
 
     opt Substantial changes (5+ files or 100+ lines)
         CC->>S: Load code-simplification skill
@@ -222,11 +226,13 @@ graph TB
         subgraph Hooks["hooks/"]
             H1[hooks.json]
             H2[session-start.sh]
-            H3[run-hook.cmd]
+            H3[skill-workflow-reminder.sh]
+            H4[run-hook.cmd]
         end
 
         subgraph Lib["lib/"]
             L1[skills-core.js]
+            L2[meta-learning-state.js]
         end
 
         subgraph Commands["commands/"]
@@ -239,26 +245,30 @@ graph TB
             C7[ai-self-reflect.md]
         end
 
-        subgraph Skills["skills/"]
+        subgraph Skills["skills/ (23 skills)"]
             S1[using-superpowers/SKILL.md]
             S2[brainstorming/SKILL.md]
-            S3[writing-plans/SKILL.md]
-            S4[using-git-worktrees/SKILL.md]
-            S5[executing-plans/SKILL.md]
-            S6[subagent-driven-development/SKILL.md]
-            S7[dispatching-parallel-agents/SKILL.md]
-            S8[test-driven-development/SKILL.md]
-            S9[systematic-debugging/<br/>SKILL.md + supporting files]
-            S10[code-simplification/SKILL.md]
-            S11[requesting-code-review/SKILL.md]
-            S12[receiving-code-review/SKILL.md]
-            S13[verification-before-completion/SKILL.md]
-            S14[documenting-completed-implementation/SKILL.md]
-            S15[finishing-a-development-branch/SKILL.md]
-            S16[ai-self-reflecting/SKILL.md]
-            S17[compound-learning/SKILL.md]
-            S18[meta-learning-review/SKILL.md]
-            S19[writing-skills/SKILL.md]
+            S3[outgoing-api-design/SKILL.md]
+            S4[writing-plans/SKILL.md]
+            S5[using-git-worktrees/SKILL.md]
+            S6[executing-plans/SKILL.md]
+            S7[subagent-driven-development/<br/>SKILL.md + prompt templates]
+            S8[dispatching-parallel-agents/SKILL.md]
+            S9[test-driven-development/SKILL.md]
+            S10[systematic-debugging/<br/>SKILL.md + supporting files]
+            S11[clean-software-design/SKILL.md]
+            S12[safe-refactoring/SKILL.md]
+            S13[code-simplification/SKILL.md]
+            S14[requesting-code-review/SKILL.md]
+            S15[receiving-code-review/SKILL.md]
+            S16[verification-before-completion/SKILL.md]
+            S17[documenting-completed-implementation/SKILL.md]
+            S18[finishing-a-development-branch/SKILL.md]
+            S19[releasing-versions/SKILL.md]
+            S20[ai-self-reflecting/SKILL.md]
+            S21[compound-learning/SKILL.md]
+            S22[meta-learning-review/SKILL.md]
+            S23[writing-skills/SKILL.md]
         end
 
         subgraph Agents["agents/"]
@@ -356,6 +366,118 @@ graph TB
     Deploy --> Commit[Commit to git]
     Commit --> End([Skill Ready])
 ```
+
+## Subagent-Driven Development (Detailed)
+
+The subagent-driven-development skill orchestrates implementation by spawning fresh subagents per task with a two-stage review after each. The controller (main Claude session) never implements directly — it reads the plan once, extracts all tasks, and dispatches subagents sequentially.
+
+```mermaid
+sequenceDiagram
+    box rgb(52,101,164) Controller
+    participant CC as Claude Code<br/>(Controller)
+    end
+    box rgb(92,83,138) Skills
+    participant S as Skills System
+    end
+    box rgb(173,68,90) Agents
+    participant I as Implementer<br/>Subagent
+    participant SR as Spec Reviewer<br/>Subagent
+    participant QR as Quality Reviewer<br/>Subagent
+    end
+
+    Note over CC: Read plan file once, extract all tasks
+    CC->>CC: Create TodoWrite with all tasks
+
+    loop For each task (sequential, never parallel)
+        rect rgb(70,90,160)
+            Note over CC,I: Phase 1: Implementation
+            CC->>I: Dispatch with full task text + context<br/>(implementer-prompt.md)
+            I->>S: Load test-driven-development
+            I->>S: Load clean-software-design (execution checks)
+
+            opt Subagent has questions
+                I-->>CC: Ask questions
+                CC->>I: Answer with context
+            end
+
+            I->>I: Write test (RED)
+            I->>I: Write minimal code (GREEN)
+            I->>I: Refactor
+            I->>I: Self-review
+            I->>I: Commit
+            I-->>CC: Report: files changed, tests, concerns
+        end
+
+        rect rgb(180,90,60)
+            Note over CC,SR: Phase 2: Spec Compliance Review
+            CC->>SR: Dispatch with spec + implementer report<br/>(spec-reviewer-prompt.md)
+            Note over SR: No skills loaded — independent verification
+            SR->>SR: Read actual code (don't trust report)
+            SR->>SR: Compare code vs requirements line-by-line
+
+            alt Spec issues found
+                SR-->>CC: ❌ Missing/extra/misunderstood requirements
+                CC->>I: Fix spec gaps
+                I-->>CC: Fixed
+                CC->>SR: Re-review
+                SR-->>CC: ✅ Spec compliant
+            else All good
+                SR-->>CC: ✅ Spec compliant
+            end
+        end
+
+        rect rgb(50,120,130)
+            Note over CC,QR: Phase 3: Code Quality Review
+            CC->>QR: Dispatch with git SHAs + task summary<br/>(code-quality-reviewer-prompt.md)
+            QR->>S: Load requesting-code-review (via code-reviewer agent)
+            QR->>S: Load clean-software-design (full review checks)
+            QR->>QR: Review quality, tests, architecture
+
+            alt Quality issues found
+                QR-->>CC: ❌ Issues: critical/important/minor
+                CC->>I: Fix quality issues
+                I-->>CC: Fixed
+                CC->>QR: Re-review
+                QR-->>CC: ✅ Approved
+            else All good
+                QR-->>CC: ✅ Approved
+            end
+        end
+
+        CC->>CC: Mark task complete in TodoWrite
+    end
+
+    rect rgb(55,130,70)
+        Note over CC,QR: Finalize
+        CC->>QR: Dispatch final code-reviewer for entire implementation
+        QR-->>CC: Final review results
+        CC->>S: Load finishing-a-development-branch
+    end
+```
+
+**Color key:**
+- **Blue** = Controller (main Claude session)
+- **Lavender** = Skills (loaded for guidance, not actors)
+- **Pink** = Agents (subagents that do the actual work)
+
+**Key rules:**
+- **Never dispatch implementation subagents in parallel** (conflicts)
+- **Never start code quality review before spec compliance passes**
+- **Controller provides full task text** to subagents (they never read the plan file)
+- Review loops repeat until approved (no "close enough")
+
+**Prompt templates** (in `skills/subagent-driven-development/`):
+
+| Template                          | Subagent Type                  | Purpose                                            |
+|-----------------------------------|--------------------------------|----------------------------------------------------|
+| `implementer-prompt.md`           | Task (general-purpose)         | Full implementation with TDD, self-review, commit  |
+| `spec-reviewer-prompt.md`         | Task (general-purpose)         | Independent verification: code matches spec        |
+| `code-quality-reviewer-prompt.md` | Task (superpowers:code-reviewer) | Code quality, tests, architecture review         |
+
+**Skills loaded by subagents:**
+- **Implementer**: `test-driven-development`, `clean-software-design` (execution checks)
+- **Spec reviewer**: None (independent verification from spec text only)
+- **Quality reviewer**: `requesting-code-review` (via code-reviewer agent), `clean-software-design` (full review checks)
 
 ## Legend
 
