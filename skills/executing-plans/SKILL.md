@@ -30,6 +30,8 @@ Load plan, review critically, execute tasks in batches, report for review betwee
 
 **Architectural compliance:** If `architectural-principles.md` exists, use `clean-software-design` to verify implementation against architectural principles and clean code standards.
 
+**Boy scout rule:** While editing files, use superpowers:boyscout to make small improvements to surrounding code you touch.
+
 For each task:
 1. Mark as in_progress
 2. Follow each step exactly (plan has bite-sized steps)

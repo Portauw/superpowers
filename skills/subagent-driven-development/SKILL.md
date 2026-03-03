@@ -199,7 +199,8 @@ Done!
 **Never:**
 - Skip reviews (spec compliance OR code quality)
 - Proceed with unfixed issues
-- Dispatch multiple implementation subagents in parallel (conflicts)
+- Dispatch multiple implementation subagents in parallel (same-file conflicts)
+- Parallelize tasks that modify the same file (group them into one agent instead)
 - Make subagent read plan file (provide full text instead)
 - Skip scene-setting context (subagent needs to understand where task fits)
 - Ignore subagent questions (answer before letting them proceed)
@@ -234,6 +235,7 @@ Done!
 **Subagents should use:**
 - **superpowers:test-driven-development** - Subagents follow TDD for each task
 - **superpowers:clean-software-design** - Subagents verify implementation against architectural principles and clean code standards
+- **superpowers:boyscout** - Subagents make small improvements to surrounding code while editing
 
 **Alternative workflow:**
 - **superpowers:executing-plans** - Use for parallel session instead of same-session execution

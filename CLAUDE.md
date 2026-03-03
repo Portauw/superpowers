@@ -194,6 +194,7 @@ Core skills trigger in sequence:
 3. `using-git-worktrees` → Isolated workspace creation
 4. `subagent-driven-development` or `executing-plans` → Task execution
 5. `test-driven-development` → RED-GREEN-REFACTOR enforcement (triggered during implementation)
+5b. `boyscout` → Small improvements to surrounding code while editing (applied during any code editing)
 6. `systematic-debugging` → 4-phase root cause analysis (triggered when bugs occur)
 7. `code-simplification` → Optional code cleanup via code-simplifier agent (if substantial changes)
 8. `requesting-code-review` → Quality verification
@@ -222,6 +223,7 @@ Core skills trigger in sequence:
 - `test-driven-development` - RED-GREEN-REFACTOR cycle enforcement
 - `systematic-debugging` - 4-phase process with root-cause-tracing
 - `code-simplification` - Optional cleanup via code-simplifier agent (requires plugin)
+- `boyscout` - Boy Scout Rule: make small improvements to surrounding code while editing
 - `verification-before-completion` - Ensure it actually works
 - `requesting-code-review` - Pre-review checklist
 - `receiving-code-review` - Responding to feedback with verification

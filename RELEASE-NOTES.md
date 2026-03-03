@@ -1,5 +1,31 @@
 # Superpowers Release Notes
 
+## v4.7.0 (2026-03-03)
+
+### New Skill
+
+**Boyscout** — Boy Scout Rule: make small improvements to surrounding code while editing
+
+New skill that encourages small, incremental improvements to code you're already touching. Referenced from executing-plans, subagent-driven-development, and test-driven-development workflows.
+
+### Improvements
+
+**Parallel agent batching guidance**
+
+- `dispatching-parallel-agents/SKILL.md` - Added "Batch by File Overlap" step: group same-file tasks into one agent, parallelize different-file tasks. Includes model selection heuristic (Sonnet for complex multi-task, Haiku for simple single-task).
+- `subagent-driven-development/SKILL.md` - Added same-file conflict warning to Red Flags
+
+**Boyscout integration across execution skills**
+
+- `executing-plans/SKILL.md` - Added boyscout reference to batch execution
+- `test-driven-development/SKILL.md` - Added boyscout reference to refactor phase, table formatting cleanup
+- `CLAUDE.md` - Added boyscout to workflow chain and complete skills list
+
+**Learnings applied**
+
+- Subagent git permissions: identified root cause as permission inheritance (user-level settings don't propagate to subagents, project-level do)
+- Same-file batching: codified pattern into dispatching-parallel-agents skill
+
 ## v4.6.0 (2026-02-11)
 
 ### Improvements

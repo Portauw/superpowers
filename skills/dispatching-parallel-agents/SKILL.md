@@ -51,7 +51,24 @@ Group failures by what's broken:
 
 Each domain is independent - fixing tool approval doesn't affect abort tests.
 
-### 2. Create Focused Agent Tasks
+### 2. Batch by File Overlap
+
+Before dispatching, group tasks by which files they modify:
+
+- **Same-file tasks → one agent** (sequential within agent, avoids conflicts)
+- **Different-file tasks → separate parallel agents**
+- Use **Sonnet** for complex multi-task agents, **Haiku** for simple single-task agents
+
+```
+Example: 6 tasks
+  Tasks 1,2,3 all modify ScheduleModal.tsx → 1 Sonnet agent (sequential)
+  Task 4 modifies api/routes.ts            → 1 Haiku agent
+  Task 5 modifies utils/dates.ts           → 1 Haiku agent
+  Task 6 modifies db/migrations.ts         → 1 Haiku agent
+  = 4 agents running in parallel
+```
+
+### 3. Create Focused Agent Tasks
 
 Each agent gets:
 - **Specific scope:** One test file or subsystem
@@ -59,7 +76,7 @@ Each agent gets:
 - **Constraints:** Don't change other code
 - **Expected output:** Summary of what you found and fixed
 
-### 3. Dispatch in Parallel
+### 4. Dispatch in Parallel
 
 ```typescript
 // In Claude Code / AI environment
@@ -69,7 +86,7 @@ Task("Fix tool-approval-race-conditions.test.ts failures")
 // All three run concurrently
 ```
 
-### 4. Review and Integrate
+### 5. Review and Integrate
 
 When agents return:
 - Read each summary
