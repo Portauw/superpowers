@@ -1,5 +1,22 @@
 # Superpowers Release Notes
 
+## v4.8.0 (2026-03-23)
+
+### New Skill
+
+**Outside Voice** — Cross-model second opinions via opencode CLI
+
+Get an independent review from a different AI model (Gemini, GPT, etc.) on plans, code, architecture, or any analysis. Uses `opencode run` to dispatch to any configured model with structured output. Supports:
+
+- **Skill pass-through** — mention a skill by name and the outside model loads it natively via its own skill tool, following the full methodology
+- **Parallel multi-model dispatch** — run multiple models simultaneously and compare findings
+- **Cross-model tension analysis** — surfaces disagreements between your current session and the outside voice
+- **Structured output** — SEVERITY/TOPIC/DETAIL format for mechanical comparison across models
+
+### Removed
+
+- `compound-learning` skill removed (consolidated into other learning workflows)
+
 ## v4.7.0 (2026-03-03)
 
 ### New Skill
