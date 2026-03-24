@@ -242,24 +242,46 @@ Parse the JSONL output. Each line is a JSON event. Extract:
 - `type: "text"` events → concatenate `.part.text` for the full response
 - `type: "step_finish"` → extract `.part.tokens` for token usage and `.part.cost` for cost
 
-Use this inline Python parser to extract the response:
+Write the parser to a temp file to avoid shell escaping issues (inline `python3 -c`
+breaks when opencode/Bun emit warnings to stdout that get mixed into the pipe):
+
 ```bash
-... | python3 -c "
+PARSER_FILE=$(mktemp /tmp/ov-parser-XXXXXX.py)
+```
+
+Write this content to `$PARSER_FILE`:
+```python
 import sys, json
 texts, tokens = [], {}
 for line in sys.stdin:
     line = line.strip()
-    if not line: continue
+    if not line:
+        continue
+    if not line.startswith('{'):
+        continue
     try:
         obj = json.loads(line)
-        t = obj.get('type','')
-        if t == 'text': texts.append(obj['part']['text'])
-        elif t == 'step_finish': tokens = obj['part'].get('tokens', {})
-    except: pass
+        t = obj.get('type', '')
+        if t == 'text':
+            texts.append(obj['part']['text'])
+        elif t == 'step_finish':
+            tokens = obj['part'].get('tokens', {})
+    except (json.JSONDecodeError, KeyError, TypeError):
+        pass
 print(''.join(texts))
-if tokens: print(f'\\ntokens: {tokens.get(\"total\", 0)}')
-"
+if tokens:
+    print(f'\ntokens: {tokens.get("total", 0)}')
 ```
+
+Then pipe through it:
+```bash
+... 2>&1 | python3 "$PARSER_FILE"
+```
+
+**Why `2>&1` instead of `2>/dev/null`:** Some runtimes (e.g., Bun) write warnings to
+stdout, not stderr. The parser skips non-JSON lines safely, so merging streams is fine.
+
+Clean up the parser file alongside the prompt file in Step 5.
 
 ### Multiple models (parallel):
 
@@ -320,7 +342,7 @@ Clean up only the temp files created in THIS invocation (use the exact filenames
 from the `mktemp` calls, not wildcards):
 
 ```bash
-rm -f "$PROMPT_FILE" 2>/dev/null
+rm -f "$PROMPT_FILE" "$PARSER_FILE" 2>/dev/null
 ```
 
 ---

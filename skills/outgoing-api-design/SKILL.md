@@ -36,11 +36,11 @@ Walk through EACH selected item **one at a time**. For each:
 
 #### 1. Abstraction Boundary
 
-| Pattern | When to use |
-|---------|-------------|
-| Port/Adapter | Might swap providers, multiple implementations |
-| Thin Client Wrapper | Internal services you own, unlikely to change |
-| Anti-Corruption Layer | External API model doesn't match your domain |
+| Pattern               | When to use                                    |
+|-----------------------|------------------------------------------------|
+| Port/Adapter          | Might swap providers, multiple implementations |
+| Thin Client Wrapper   | Internal services you own, unlikely to change  |
+| Anti-Corruption Layer | External API model doesn't match your domain   |
 
 *Ask:* Which pattern? Where does the boundary sit? What operations does your domain need?
 
