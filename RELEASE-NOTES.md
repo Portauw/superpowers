@@ -1,5 +1,25 @@
 # Superpowers Release Notes
 
+## v4.8.1 (2026-03-25)
+
+### Improvements
+
+**Second Opinion** (renamed from outside-voice) — major robustness overhaul
+
+- Renamed skill from `outside-voice` to `second-opinion`
+- Added `--file` flag support for passing files directly (avoids shell escaping issues)
+- Removed temp file machinery — dispatch is now fully inline or via `--file`
+- Fixed frontmatter quoting that broke skill discovery (description had literal quotes)
+- Improved error handling: parser now logs errors to stderr instead of silent `except: pass`
+- Clarified fallback behavior: opencode missing = stop with suggestion, not auto-fallback
+- Multi-model dispatch uses Agent tool for true parallel execution
+- Reduced skill from 381 to ~93 lines while preserving all functionality
+
+**Learnings captured:**
+- Large prompt truncation with shell expansion
+- Skill namespace discovery issues
+- Permission rejection requires immediate pivot
+
 ## v4.8.0 (2026-03-23)
 
 ### New Skill
