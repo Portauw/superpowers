@@ -9,7 +9,9 @@ description: Use when creating new skills, editing existing skills, or verifying
 
 **Writing skills IS Test-Driven Development applied to process documentation.**
 
-**Personal skills live in agent-specific directories (`~/.claude/skills` for Claude Code, `~/.codex/skills` for Codex)** 
+**Personal skills live in agent-specific directories (`~/.claude/skills` for Claude Code, `~/.codex/skills` for Codex)**
+
+**Plugin/shared skills** may be installed via package managers and cached locally (e.g., `~/.claude/plugins/cache/`). Always edit the **source repo**, not the cache — cached copies are overwritten on updates. 
 
 You write test cases (pressure scenarios with subagents), watch them fail (baseline behavior), write the skill (documentation), watch tests pass (agents comply), and refactor (close loopholes).
 
@@ -623,8 +625,17 @@ Deploying untested skills = deploying untested code. It's a violation of quality
 - [ ] Supporting files only for tools or heavy reference
 
 **Deployment:**
+- [ ] Locate the source repo (not a cache copy — see "Locating Skill Source" below)
 - [ ] Commit skill to git and push to your fork (if configured)
 - [ ] Consider contributing back via PR (if broadly useful)
+
+**Locating Skill Source:**
+
+Before editing any skill, determine where the source lives. Skills loaded from plugins are cached locally but must be edited at the source to persist across updates.
+
+Ask the user: *"Where is the source repo for this skill? I want to edit the source, not the cache."*
+
+Check memory for previously saved source repo locations. If found, verify the path still exists before editing. If not found, ask the user and save the mapping to memory for future sessions.
 
 ## Discovery Workflow
 
