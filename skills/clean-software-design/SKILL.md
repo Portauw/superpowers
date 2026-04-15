@@ -7,7 +7,7 @@ description: "Use when starting implementation, designing architecture, writing 
 
 ## Overview
 
-Cross-cutting quality gate that verifies DDD, clean architecture, SOLID, and clean code principles. Adapts to project-specific context stored in `architectural-principles.md`.
+Cross-cutting quality gate that verifies DDD, clean architecture, SOLID, and clean code principles. Adapts to project-specific context stored in `ARCHITECTS.md`.
 
 **Core principle:** Opinionated defaults with project-aware context. The skill ensures design principles are considered at every workflow stage.
 
@@ -17,10 +17,10 @@ Every invocation follows these steps:
 
 ### Step 1: Load Project Context
 
-1. Check CLAUDE.md for a reference to an architectural principles file
-2. If found → Read the file (typically `docs/architectural-principles.md`)
-3. If not found → Ask user: "This project doesn't have an architectural principles file. Should I create one at `docs/architectural-principles.md`?"
-4. If user agrees → Scaffold the file (see template below), add reference to CLAUDE.md
+1. Look for `ARCHITECTS.md` in the project root (the convention, like `CLAUDE.md` and `AGENTS.md`)
+2. If found → Read it
+3. If not found → Ask user: "This project doesn't have an `ARCHITECTS.md`. Should I create one?"
+4. If user agrees → Scaffold the file (see template below)
 
 ### Step 2: Verify for Current Stage
 
@@ -29,7 +29,7 @@ Apply the checks relevant to the current workflow stage (see Stage-Specific Chec
 ### Step 3: Capture New Decisions
 
 If new architectural decisions are made during this invocation:
-- Append to the appropriate section in `architectural-principles.md`
+- Append to the appropriate section in `ARCHITECTS.md`
 - Never overwrite existing entries without asking
 
 ## Stage-Specific Checks
@@ -43,7 +43,7 @@ Focus: *Are we building the right thing in the right boundaries?*
 - **Context mapping:** How does this context interact with others?
 - **Quality attributes:** Which non-functional requirements matter most? Ask to rank with rationale.
 
-Output: Constraints summary for the design doc + updates to `architectural-principles.md`.
+Output: Constraints summary for the design doc + updates to `ARCHITECTS.md`.
 
 ### Planning (Tactical)
 
@@ -78,9 +78,9 @@ All of the above, plus:
 
 Output: Findings with severity (critical / important / minor).
 
-## architectural-principles.md Scaffold Template
+## ARCHITECTS.md Scaffold Template
 
-When creating a new `architectural-principles.md`, use this template:
+When creating a new `ARCHITECTS.md`, use this template:
 
 ```markdown
 # Architectural Principles
