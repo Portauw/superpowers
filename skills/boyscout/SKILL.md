@@ -1,6 +1,6 @@
 ---
 name: boyscout
-description: Use when editing or reading code files during any task - make small improvements to surrounding code you touch, beyond just the requested change
+description: Use when editing or reading code files after completing any task - make small improvements to surrounding code you touch, beyond just the requested change
 ---
 
 # Boy Scout Rule

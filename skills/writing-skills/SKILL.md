@@ -94,15 +94,34 @@ skills/
 
 ## SKILL.md Structure
 
-**Frontmatter (YAML):**
-- Only two fields supported: `name` and `description`
-- Max 1024 characters total
-- `name`: Use letters, numbers, and hyphens only (no parentheses, special chars)
+### Frontmatter (YAML)
+
+Two fields are used for discovery and display. Max 1024 characters total.
+
+- `name`: Letters, numbers, hyphens only (no parentheses, special chars). Max 64 chars. Falls back to directory name if omitted.
 - `description`: Third-person, describes ONLY when to use (NOT what it does)
   - Start with "Use when..." to focus on triggering conditions
   - Include specific symptoms, situations, and contexts
   - **NEVER summarize the skill's process or workflow** (see CSO section for why)
   - Keep under 500 characters if possible
+
+**Additional frontmatter fields** control runtime behavior (see "Runtime Capabilities" section below for details):
+
+| Field | Purpose |
+|-------|---------|
+| `argument-hint` | Hint shown in autocomplete (e.g., `[issue-number]`) |
+| `disable-model-invocation` | `true` = only user can invoke via `/name` (not auto-triggered) |
+| `user-invocable` | `false` = hidden from `/` menu (only Claude can invoke) |
+| `allowed-tools` | Restrict tools when skill is active (e.g., `Read, Grep, Glob`) |
+| `model` | Override session model (e.g., `opus`) |
+| `effort` | Thinking effort: `low`, `medium`, `high`, `max` |
+| `context` | `fork` = run in isolated subagent context |
+| `agent` | Subagent type when `context: fork` (`Explore`, `Plan`, `general-purpose`, or custom) |
+| `paths` | Glob patterns limiting auto-activation (e.g., `src/**/*.ts`) |
+| `hooks` | Hooks scoped to this skill's lifecycle |
+| `shell` | Shell for inline commands: `bash` (default) or `powershell` |
+
+### Body Template
 
 ```markdown
 ---
@@ -365,6 +384,86 @@ pptx/
   scripts/       # Executable tools
 ```
 When: Reference material too large for inline
+
+## Runtime Capabilities
+
+These Claude Code features go beyond skill content authoring. Use them to make skills dynamic, scoped, and context-aware.
+
+### String Substitutions
+
+Skills support placeholders replaced at runtime:
+
+| Variable | Description | Example |
+|----------|-------------|---------|
+| `$ARGUMENTS` | All arguments passed to the skill | `/my-skill foo bar` → `foo bar` |
+| `$0`, `$1`, `$N` | Individual arguments by index | `$0` = first arg |
+| `${CLAUDE_SESSION_ID}` | Current session ID | Useful for session-specific logs |
+| `${CLAUDE_SKILL_DIR}` | Directory containing SKILL.md | Reference bundled scripts portably |
+
+If `$ARGUMENTS` isn't used in the skill body, arguments are appended as `ARGUMENTS: <value>`.
+
+### Dynamic Context Injection
+
+Use the pattern `! + backtick + command + backtick` to run shell commands *before* Claude sees the skill. Output replaces the placeholder.
+
+Example: a skill with `! + backtick + gh pr diff + backtick` in its body will have that token replaced with the actual PR diff at load time. This is preprocessing — commands execute immediately and their output becomes part of the prompt.
+
+### Invocation Control
+
+Control who can trigger a skill:
+
+| Setting | User `/name` | Claude auto-invokes | Use case |
+|---------|-------------|-------------------|----------|
+| Default | Yes | Yes | Most skills |
+| `disable-model-invocation: true` | Yes | **No** | Side-effect skills (deploy, send) |
+| `user-invocable: false` | **No** | Yes | Background knowledge |
+
+### Subagent Execution
+
+Add `context: fork` to run a skill in an isolated subagent (no conversation history):
+
+```yaml
+---
+name: deep-research
+context: fork
+agent: Explore
+allowed-tools: Read, Grep, Glob
+---
+```
+
+Built-in agent types: `Explore` (read-only), `Plan` (analysis), `general-purpose` (full toolkit), or custom agent names from `.claude/agents/`.
+
+### Progressive Disclosure
+
+SKILL.md is a table of contents. Claude lazily loads referenced files only when needed:
+
+- **Keep SKILL.md under 500 lines** — move heavy reference to separate files
+- **One level deep only** — don't chain `SKILL.md → advanced.md → details.md`. Claude may only preview deeply nested files with `head`
+- **Add TOC to files over 100 lines** — ensures Claude can see scope even with partial reads
+- **Reference, don't embed** — `See [FORMS.md](FORMS.md) for form-filling guide`
+
+### Context Budget
+
+Skill descriptions share a budget of **2% of context window** (fallback: 16k chars if too many skills). Run `/context` to check for excluded skills. Override with `SLASH_COMMAND_TOOL_CHAR_BUDGET` env var.
+
+### Distribution Hierarchy
+
+Skills can live at multiple levels (higher priority wins on name conflicts):
+
+1. **Enterprise** — organization-wide, admin-controlled (read-only)
+2. **Personal** — `~/.claude/skills/` (all your projects)
+3. **Project** — `.claude/skills/` (committed to repo)
+4. **Plugin** — distributed via package, namespaced as `/plugin-name:skill-name`
+
+### Degrees of Freedom
+
+Match prescriptiveness to fragility:
+
+- **High freedom** (text instructions) — multiple valid approaches, context-dependent (e.g., code review)
+- **Medium freedom** (pseudocode/templates) — preferred pattern exists, some variation OK (e.g., report generation)
+- **Low freedom** (exact scripts) — fragile operations, consistency critical (e.g., database migrations)
+
+**Rule of thumb:** narrow bridge with cliffs = low freedom. Open field = high freedom.
 
 ## The Iron Law (Same as TDD)
 
