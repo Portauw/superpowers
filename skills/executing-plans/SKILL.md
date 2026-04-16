@@ -50,7 +50,26 @@ Based on feedback:
 - Execute next batch
 - Repeat until complete
 
-### Step 5: Complete Development
+### Step 5: Post-Implementation Quality Loop
+
+After all tasks complete and tests pass, run iterative refinement:
+
+```
+1. /simplify     → reduce complexity, remove verbosity
+2. /review       → find correctness, security, and logic issues → fix them
+3. Dead code     → remove unused exports, bloat tests, unreachable branches
+4. Simplify loop → repeat simplify+fix for N iterations (default: 2)
+```
+
+**Iteration guidance:**
+- **2 iterations** for routine features — iteration 1 catches real issues, iteration 2 confirms clean
+- **3 iterations** for security-sensitive code (auth, credentials, network, process spawning)
+- **Stop early** when an iteration finds no meaningful changes
+- Simplify first, then review — reviewer finds logic/security bugs, not style complaints
+
+**Subagent dispatch:** Each step can be a separate subagent. Pass full file list and "make no changes unless they improve the code" to prevent churn.
+
+### Step 6: Complete Development
 
 After all tasks complete and verified:
 - Announce: "I'm using the finishing-a-development-branch skill to complete this work."
