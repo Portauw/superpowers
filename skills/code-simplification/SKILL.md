@@ -100,30 +100,6 @@ The code-simplifier agent focuses on:
 
 **Preserves:** All functionality, tests, behavior
 
-## Post-Implementation Quality Loop
-
-When user requests a full quality pass (e.g., "simplify, review, fix, loop"), follow this sequence:
-
-```
-1. /simplify     → reduce complexity, remove verbosity
-2. /review       → find correctness, security, and logic issues → fix them
-3. Dead code     → remove unused exports, bloat tests, unreachable branches
-4. Simplify loop → repeat simplify+fix for N iterations (default: 2)
-```
-
-**Iteration guidance:**
-- **2 iterations** for routine features — iteration 1 catches real issues, iteration 2 confirms clean
-- **3 iterations** for security-sensitive code (auth, credential handling, network, process spawning)
-- **Stop early** when an iteration finds no meaningful changes — don't force it
-- Diminishing returns are steep: iteration 1 is high-value, iteration 2 moderate, iteration 3 rarely finds new issues
-
-**Why this order matters:**
-- Simplifying first reduces surface area for the reviewer
-- Review on cleaner code produces genuine logic/security findings, not style complaints
-- Dead code audit after review catches test bloat introduced during fix cycles
-
-**Subagent dispatch:** Each step can be dispatched as a separate subagent. Pass the full file list and "make no changes unless they improve the code" instruction to prevent churn.
-
 ## Integration Points
 
 **After these skills, suggest code-simplification:**
