@@ -7,7 +7,7 @@ description: Use when you need an independent second opinion from a different AI
 
 Two models agreeing = high confidence. Disagreement = worth investigating.
 
-## Step 1: Setup
+## Step 1: Setup & Model Selection
 
 ```bash
 which opencode 2>/dev/null && echo "FOUND" || echo "NOT_FOUND"
@@ -19,9 +19,32 @@ https://opencode.ai — or you can use a Claude subagent (Agent tool) as a light
 alternative for a second opinion from a different Claude model."
 Do NOT automatically fall back — let the user decide.
 
-**Model selection:** If user specified a model, substring-match against the list.
-Otherwise ask — list non-Anthropic models only (cross-family diversity is the point).
-Allow Anthropic if explicitly requested.
+**Model selection — auto-select unless user specified one:**
+
+1. **Classify the review context** from what's being reviewed:
+
+   | Context type | Keywords to look for |
+   |---|---|
+   | `code` | diff, PR, implementation, function, bug, refactor, test |
+   | `architecture` | design, system, API, schema, database, pattern, structure |
+   | `reasoning` | logic, proof, algorithm, math, tradeoffs, decision |
+   | `security` | vulnerability, auth, injection, attack, exploit, CVE |
+   | `general` | anything else |
+
+2. **Match models** — scan available non-Anthropic models against these strength patterns:
+
+   | Model pattern | Strong at |
+   |---|---|
+   | `codex`, `deepseek`, `coder` | code review, implementation |
+   | `gemini` | architecture, long context, multimodal |
+   | `thinking`, `kimi`, `r1` | chain-of-thought reasoning, logic |
+   | `o1`, `o3`, `o4` | complex reasoning, math, security |
+   | `gpt`, `big-pickle` | general analysis, code review |
+   | `mistral`, `llama`, `command` | alternative perspective, open-source view |
+
+3. **Pick the best match** for the classified context. If multiple match equally well, dispatch 2 in parallel for higher confidence. If user specified a model, use that instead (substring-match against the list).
+
+4. **Prefer non-Anthropic** — cross-family diversity is the point. Allow Anthropic only if user explicitly requests it or no other models are available.
 
 ## Step 2: Build the prompt
 
@@ -70,6 +93,9 @@ If multiple models: show each, then a cross-model comparison (what overlaps, wha
 
 If the outside voice disagrees with your earlier analysis, flag the tension explicitly.
 
+State which model(s) were selected and why (e.g., "Selected `trellis/gpt-codex` for
+code review context — strong at implementation analysis").
+
 ## Error Handling
 
 All errors are **non-blocking** — outside voice is a quality enhancement, not a gate.
@@ -77,7 +103,7 @@ All errors are **non-blocking** — outside voice is a quality enhancement, not 
 | Error | Action |
 |-------|--------|
 | opencode not installed | Stop. Suggest install or Claude subagent alternative — let user decide |
-| Model not available | List models, ask user to pick another |
+| Model not available | Try next best match from the model list |
 | Auth/rate limit | Suggest a different model |
 | Timeout / empty response | Retry once, then report and move on |
 | Permission rejected | Try a different model, simplify the prompt, or ask the user — never retry the same command |
@@ -86,7 +112,9 @@ All errors are **non-blocking** — outside voice is a quality enhancement, not 
 ## Rules
 
 - **Never modify files.** Read-only skill.
+- **Auto-select model from context** — never ask unless no good match exists.
 - **Verbatim first, synthesis second.**
 - **Self-contained prompts.** Zero conversation context for the outside model.
 - **Prefer non-Anthropic models.** Cross-family diversity is the point.
 - **On rejection, change approach.** Try a different model, simplify, or ask the user.
+- **State your selection.** Always tell the user which model was picked and the reason.
