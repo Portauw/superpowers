@@ -1,5 +1,11 @@
 # Superpowers Release Notes
 
+## v4.8.3 (2026-04-19)
+
+### Changes
+
+**second-opinion** — moved to `sterling-skills` repo (personal skill, not a general workflow)
+
 ## v4.8.1 (2026-03-25)
 
 ### Improvements
