@@ -1,5 +1,17 @@
 # Superpowers Release Notes
 
+## v4.8.4 (2026-04-27)
+
+### Changes
+
+Reorganize non-standard subdirectories to match the official Anthropic skill structure (`scripts/` only):
+
+- **meta-learning-review** — `lib/` → `scripts/`
+- **systematic-debugging** — `find-polluter.sh` moved into `scripts/`
+- **writing-skills** — `examples/CLAUDE_MD_TESTING.md` flattened to skill root
+
+Internal references updated.
+
 ## v4.8.3 (2026-04-19)
 
 ### Changes

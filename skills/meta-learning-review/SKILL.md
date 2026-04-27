@@ -44,7 +44,7 @@ echo "Found $LEARNING_COUNT learnings to analyze."
 Run learning analyzer:
 
 ```bash
-node skills/meta-learning-review/lib/learning-analyzer.js analyze
+node skills/meta-learning-review/scripts/learning-analyzer.js analyze
 ```
 
 Output: JSON with patterns, stale learnings, suggestions
@@ -87,7 +87,7 @@ For each stale learning:
 
 ```bash
 # Patterns detected (3+ learnings with same primary tag)
-node skills/meta-learning-review/lib/learning-analyzer.js patterns
+node skills/meta-learning-review/scripts/learning-analyzer.js patterns
 ```
 
 Output:
@@ -109,7 +109,7 @@ Output:
 
 ```bash
 # For each pattern, find matching skill (if any)
-node skills/meta-learning-review/lib/learning-analyzer.js match-skills
+node skills/meta-learning-review/scripts/learning-analyzer.js match-skills
 ```
 
 Output:
