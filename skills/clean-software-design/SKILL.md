@@ -24,7 +24,7 @@ Every invocation follows these steps:
 
 ### Step 2: Verify for Current Stage
 
-Apply the checks relevant to the current workflow stage (see Stage-Specific Checks below). Use `reference.md` for the detailed verification criteria.
+Apply the checks relevant to the current workflow stage (see Stage-Specific Checks below). Use `references/reference.md` for the detailed verification criteria.
 
 ### Step 3: Capture New Decisions
 
@@ -66,7 +66,7 @@ Focus: *Is the code clean and principled?*
 - **No framework leakage:** Domain layer has zero infrastructure imports
 - **Repository pattern:** Data access behind abstractions
 
-Output: Verification criteria for the sub-agent. Load `reference.md` for detailed checks.
+Output: Verification criteria for the sub-agent. Load `references/reference.md` for detailed checks.
 
 ### Review (Full Compliance)
 
@@ -114,4 +114,4 @@ When creating a new `ARCHITECTS.md`, use this template:
 
 ## Reference
 
-For detailed verification criteria on all principles (DDD, SOLID, clean architecture, clean code), see `reference.md`.
+For detailed verification criteria on all principles (DDD, SOLID, clean architecture, clean code), see `references/reference.md`.

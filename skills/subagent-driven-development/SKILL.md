@@ -82,9 +82,9 @@ flowchart TD
 
 ## Prompt Templates
 
-- `./implementer-prompt.md` - Dispatch implementer subagent
-- `./spec-reviewer-prompt.md` - Dispatch spec compliance reviewer subagent
-- `./code-quality-reviewer-prompt.md` - Dispatch code quality reviewer subagent
+- `./assets/implementer-prompt.md` - Dispatch implementer subagent
+- `./assets/spec-reviewer-prompt.md` - Dispatch spec compliance reviewer subagent
+- `./assets/code-quality-reviewer-prompt.md` - Dispatch code quality reviewer subagent
 
 ## Example Workflow
 

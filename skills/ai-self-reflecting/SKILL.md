@@ -7,7 +7,7 @@ description: Use when verification-before-completion finishes or when analyzing 
 
 **Purpose:** Analyze the session for mistakes, categorize learnings, and apply them where they belong.
 
-**DETAILED REFERENCE:** See reference.md for full JSON templates, file formats, and implementation details.
+**DETAILED REFERENCE:** See references/reference.md for full JSON templates, file formats, and implementation details.
 
 ## When to Use
 
@@ -23,7 +23,7 @@ description: Use when verification-before-completion finishes or when analyzing 
 
 **2. Analyze for Mistakes**
 - Silently analyze conversation within scope
-- Detect three mistake types (see reference.md for patterns):
+- Detect three mistake types (see references/reference.md for patterns):
   - **Type A: User Corrections** - User says "no", "wrong", "actually", corrects AI
   - **Type B: Backtracking** - AI confident → fails → surprised pivot
   - **Type C: Repeated Errors** - Same error 2+ times in session
@@ -71,7 +71,7 @@ Options:
 - **Save all for later** - Write to docs/learnings/ without action
 - **Skip all** - Don't capture
 
-See reference.md for full option definitions and AskUserQuestion template.
+See references/reference.md for full option definitions and AskUserQuestion template.
 
 **6. Execute Actions by Category**
 
@@ -134,7 +134,7 @@ project: [PROJECT_NAME]
 [Category-specific: CLAUDE.md update, skill mod, or reference note]
 ```
 
-See reference.md for full template and categorization logic.
+See references/reference.md for full template and categorization logic.
 
 ## Categorization Examples
 
@@ -160,7 +160,7 @@ See reference.md for full template and categorization logic.
 
 ## Action Implementation Summary
 
-See reference.md for detailed procedures. High-level:
+See references/reference.md for detailed procedures. High-level:
 
 **Update CLAUDE.md:**
 - Read current structure → Draft addition → Edit tool → Write learning with "IMPLEMENTED: Added to CLAUDE.md on [DATE]"

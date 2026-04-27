@@ -100,7 +100,7 @@ When you invoke a skill via the Skill tool:
 - **Sonnet** for planning, code review, debugging
 - **Haiku** for execution, TDD, verification
 
-See model-selection.md for full breakdown by skill.
+See references/model-selection.md for full breakdown by skill.
 
 ## User Instructions
 

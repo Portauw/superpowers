@@ -1,5 +1,25 @@
 # Superpowers Release Notes
 
+## v4.8.5 (2026-04-27)
+
+### Changes
+
+Adopt the agentskills.io open standard subdirectory layout (`scripts/`,
+`references/`, `assets/`) across all skills with bundled resources:
+
+- **ai-self-reflecting**, **clean-software-design**, **releasing-versions**,
+  **test-driven-development**, **using-superpowers** — root `.md` references
+  moved into `references/`.
+- **writing-skills** — `anthropic-best-practices.md`, `mermaid-conventions.md`,
+  `persuasion-principles.md`, `testing-skills-with-subagents.md` →
+  `references/`. `CLAUDE_MD_TESTING.md` (worked example) → `assets/`.
+- **systematic-debugging** — three technique docs → `references/`;
+  `condition-based-waiting-example.ts` → `assets/`.
+- **requesting-code-review** — `code-reviewer.md` template → `assets/`.
+- **subagent-driven-development** — three prompt templates → `assets/`.
+
+All internal references updated.
+
 ## v4.8.4 (2026-04-27)
 
 ### Changes
