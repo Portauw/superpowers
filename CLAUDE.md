@@ -200,12 +200,17 @@ Core skills trigger in sequence:
 2. `writing-plans` → Detailed implementation planning
 3. `using-git-worktrees` → Isolated workspace creation
 4. `subagent-driven-development` or `executing-plans` → Task execution
+4b. `frontend-ui` → Triggered when implementation builds or modifies user-facing components (cross-cutting quality gate)
+4c. `security` → Triggered when implementation touches auth, input validation, secrets, external requests, file uploads, or database queries (cross-cutting quality gate)
+4d. `ci-cd` → Triggered when implementation modifies CI pipelines, workflow YAML, or deploy automation
 5. `test-driven-development` → RED-GREEN-REFACTOR enforcement (triggered during implementation)
 5b. `boyscout` → Small improvements to surrounding code while editing (applied during any code editing)
 6. `systematic-debugging` → 4-phase root cause analysis (triggered when bugs occur)
+6b. `performance` → Triggered when users report slowness, Core Web Vitals fail, or a regression is suspected (measure before optimizing)
 7. `code-simplification` → Optional code cleanup via code-simplifier agent (if substantial changes)
-8. `requesting-code-review` → Quality verification
+8. `requesting-code-review` → Quality verification (fans out `code-reviewer` + `security-auditor` and/or `test-engineer` in parallel when surface warrants)
 9. `verification-before-completion` → Ensure fixes actually work
+9b. `browser-testing` → Required sub-skill of `verification-before-completion` when changes touch a browser surface (DOM, JS, CSS, network calls from the page)
 10. `ai-self-reflecting` → Automatic mistake detection and learning capture (optional after verification)
 11. `documenting-completed-implementation` → Update project documentation
 12. `finishing-a-development-branch` → Integration decisions (merge/PR/cleanup)
