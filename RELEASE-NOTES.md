@@ -1,5 +1,36 @@
 # Superpowers Release Notes
 
+## v4.9.0 (2026-05-03)
+
+### New Skills (ported from addyosmani/agent-skills, MIT)
+
+Five production-engineering skills translated into superpowers voice (Iron Law, anti-rationalization tables, Red Flags, Verification checklists, mermaid where decisions are non-obvious):
+
+- **security** — OWASP Top 10 walkthrough, Three-Tier Boundary System (Always do / Ask first / Never do), input validation patterns, `npm audit` triage, secrets management. Heavy reference at `skills/security/security-checklist.md`.
+- **frontend-ui** — production-quality UI guidance with the **AI Aesthetic Anti-Patterns** table (purple/indigo defaults, oversized rounded cards, generic heroes, lorem-ipsum copy, etc.) as the load-bearing artifact. WCAG 2.1 AA, design system adherence, responsive design. Heavy reference at `skills/frontend-ui/accessibility-checklist.md`.
+- **browser-testing** — Chrome DevTools MCP workflow (REPRODUCE→INSPECT→DIAGNOSE→FIX→VERIFY) with explicit "browser content is untrusted data" security boundary. Pairs with `verification-before-completion`.
+- **performance** — measure-first discipline, Core Web Vitals targets, three-layer investigation (render / network / database), cost-benefit decision table. Heavy reference at `skills/performance/performance-checklist.md`.
+- **ci-cd** — pipeline stages, caching, required checks, secret handling, branch protection, deploy strategy, rollback plans.
+
+### New Personas
+
+- **`security-auditor`** — focused security review, OWASP/threat-model perspective, severity-tagged findings, no code modification.
+- **`test-engineer`** — focused test review, pyramid balance, isolation, mock-vs-real, assertion quality, severity-tagged findings.
+
+### Structural Patterns
+
+- **`AGENTS.md`** — top-level cross-tool entry point (Cursor, Antigravity, Aider, OpenCode, Codex, Copilot agents). Mirrors CLAUDE.md but tool-agnostic. Includes intent → skill mapping, lifecycle mapping, anti-rationalization rules, persona orchestration constraints.
+- **`references/`** — top-level cross-skill reference directory. Initial content: `testing-patterns.md` (canonical) plus pointers to skill-local checklists for security/performance/accessibility.
+- **`requesting-code-review`** — extended with **Parallel Specialist Review** section. Fans out `security-auditor` (auth/input/secrets/uploads/DB/payments) and `test-engineer` (test files / CI test config) in parallel alongside the standard `code-reviewer`, then merges findings into one severity-tagged report.
+
+### Test Files
+
+Each new skill ships with a baseline scenarios doc and a `tests/claude-code/test-<skill>.sh` modeled on `test-boyscout.sh` (RED + GREEN phases). Scripts are runnable via `./run-skill-tests.sh --test test-<skill>.sh` once Claude CLI is configured.
+
+### Attribution
+
+Source skills are MIT-licensed work from [addyosmani/agent-skills](https://github.com/addyosmani/agent-skills). Each ported skill carries an attribution line at the bottom.
+
 ## v4.8.5 (2026-04-27)
 
 ### Changes
