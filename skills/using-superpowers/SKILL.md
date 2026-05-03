@@ -119,6 +119,11 @@ Recognize these user phrases as skill invocation triggers:
 | "is this ready to merge", "can we ship this" | `verification-before-completion` | Claims require evidence |
 | "call this API", "integrate with X", "connect to a service" | `outgoing-api-design` | API integrations need resilience and abstraction design before code |
 | "clean this up", "simplify the code", "make this cleaner" | `code-simplification` | Code quality improvement via code-simplifier agent |
+| "implement auth", "store passwords", "handle user input", "accept file uploads", "add this query param", "validate input" | `security` | Security-sensitive surfaces require Three-Tier Boundary discipline before code |
+| "build a UI", "add a component", "make it look modern", "landing page", "design this screen" | `frontend-ui` | UI work without the skill defaults to "AI aesthetic" — purple gradients, generic heroes, missing a11y |
+| "users report slowness", "the page is slow", "Core Web Vitals", "make it faster", "optimize this" | `performance` | Optimization without measurement is guessing; profile first |
+| "looks fine in my editor", "ship the component", "I changed the UI", "the search bar works now" | `browser-testing` | Browser-facing changes need DevTools verification, not editor preview |
+| "set up CI", "GitHub Actions", "deploy automation", "branch protection", "add a deploy step" | `ci-cd` | Pipeline gates and rollback plans go in from day one, not retrofitted |
 
 **Exception:** Only skip skill if user explicitly says "skip the workflow" or "just commit it".
 

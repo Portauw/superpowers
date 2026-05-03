@@ -14,6 +14,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 Recent implementations (see docs/plans/completed/ for details):
 
+- **2026-05-03**: Production Engineering Skills (port from addyosmani/agent-skills, MIT) - Five new skills (`security`, `frontend-ui`, `browser-testing`, `performance`, `ci-cd`), two new personas (`security-auditor`, `test-engineer`) wired into `requesting-code-review` as parallel fan-out, top-level `references/` directory, and `AGENTS.md` for cross-tool reach
 - **2026-02-10**: Clean Software Design - Cross-cutting quality gate skill enforcing DDD, clean architecture, SOLID, and clean code principles throughout the workflow (brainstorming, planning, execution, review)
 - **2026-02-10**: Outgoing API Design - Skill for designing outgoing API integrations (third-party and microservice calls) with triage checklist, guided deep dive, and design document output
 - **2026-01-14**: AI Self-Reflection - Automatic mistake detection skill that analyzes sessions for user corrections, backtracking, and repeated errors, capturing learnings with ai-detected source field
@@ -61,7 +62,13 @@ The `.claude-plugin/` directory contains Claude Code plugin configuration:
 
 ### Agents
 
-The `agents/` directory contains agent definitions (currently `code-reviewer.md`) used by skills for specialized workflows like code review in subagent-driven-development.
+The `agents/` directory contains agent personas — review/analysis roles with a perspective and a defined output format:
+
+- `code-reviewer` - General code review against plan and quality standards; invoked by `requesting-code-review`.
+- `security-auditor` - Focused security review (OWASP Top 10, threat modeling); invoked by `requesting-code-review` when changes touch auth, input validation, secrets, external requests, file uploads, or DB queries.
+- `test-engineer` - Focused test review (pyramid balance, isolation, mock vs real, assertion quality); invoked by `requesting-code-review` when changes touch test files or CI test config.
+
+**Persona orchestration:** Personas do not invoke other personas. Skills (specifically `requesting-code-review`) orchestrate them via parallel fan-out + merge. See `AGENTS.md` for the full rule.
 
 ## Development Setup
 
@@ -193,12 +200,17 @@ Core skills trigger in sequence:
 2. `writing-plans` → Detailed implementation planning
 3. `using-git-worktrees` → Isolated workspace creation
 4. `subagent-driven-development` or `executing-plans` → Task execution
+4b. `frontend-ui` → Triggered when implementation builds or modifies user-facing components (cross-cutting quality gate)
+4c. `security` → Triggered when implementation touches auth, input validation, secrets, external requests, file uploads, or database queries (cross-cutting quality gate)
+4d. `ci-cd` → Triggered when implementation modifies CI pipelines, workflow YAML, or deploy automation
 5. `test-driven-development` → RED-GREEN-REFACTOR enforcement (triggered during implementation)
 5b. `boyscout` → Small improvements to surrounding code while editing (applied during any code editing)
 6. `systematic-debugging` → 4-phase root cause analysis (triggered when bugs occur)
+6b. `performance` → Triggered when users report slowness, Core Web Vitals fail, or a regression is suspected (measure before optimizing)
 7. `code-simplification` → Optional code cleanup via code-simplifier agent (if substantial changes)
-8. `requesting-code-review` → Quality verification
+8. `requesting-code-review` → Quality verification (fans out `code-reviewer` + `security-auditor` and/or `test-engineer` in parallel when surface warrants)
 9. `verification-before-completion` → Ensure fixes actually work
+9b. `browser-testing` → Required sub-skill of `verification-before-completion` when changes touch a browser surface (DOM, JS, CSS, network calls from the page)
 10. `ai-self-reflecting` → Automatic mistake detection and learning capture (optional after verification)
 11. `documenting-completed-implementation` → Update project documentation
 12. `finishing-a-development-branch` → Integration decisions (merge/PR/cleanup)
@@ -236,6 +248,13 @@ Core skills trigger in sequence:
 - `ai-self-reflecting` - Analyze session for mistakes (user corrections, backtracking, repeated errors), capture learnings automatically
 - `meta-learning-review` - Analyze learnings, detect patterns, suggest skills. Handles decay (archives stale knowledge). Triggered every 10 learnings or via /review-learnings.
 - `compound-learning` - Quick capture after verification. Builds searchable knowledge in docs/learnings/.
+
+**Production Engineering** (ported from addyosmani/agent-skills, MIT):
+- `security` - OWASP Top 10 prevention, Three-Tier Boundary System, input validation, secrets management
+- `frontend-ui` - Production-quality UI with AI aesthetic anti-pattern table, WCAG 2.1 AA, design system adherence
+- `browser-testing` - Chrome DevTools MCP workflow with untrusted-data security boundary; pairs with `verification-before-completion`
+- `performance` - Measure-first discipline, Core Web Vitals targets, three-layer investigation (render/network/database)
+- `ci-cd` - Pipeline gates, caching, secret handling, branch protection, rollback plans
 
 **Meta**:
 - `using-superpowers` - Introduction to skills system (auto-loaded at session start)

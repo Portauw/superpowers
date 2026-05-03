@@ -121,6 +121,13 @@ Fetch and follow instructions from https://raw.githubusercontent.com/obra/superp
 - **finishing-a-development-branch** - Merge/PR decision workflow
 - **subagent-driven-development** - Fast iteration with two-stage review (spec compliance, then code quality)
 
+**Production Engineering** *(ported from [addyosmani/agent-skills](https://github.com/addyosmani/agent-skills), MIT)*
+- **security** - OWASP Top 10 prevention, Three-Tier Boundary System, input validation, secrets management
+- **frontend-ui** - Production-quality UI with explicit anti-patterns table for the "AI aesthetic" (purple gradients, oversized rounded cards, generic heroes, lorem-ipsum copy), plus WCAG 2.1 AA and design system adherence
+- **browser-testing** - Chrome DevTools MCP workflow with untrusted-data security boundary; pairs with verification-before-completion
+- **performance** - Measure-first discipline, Core Web Vitals targets, three-layer investigation (render / network / database)
+- **ci-cd** - Pipeline gates, caching, secret handling, branch protection, rollback plans
+
 **Meta**
 - **writing-skills** - Create new skills following best practices (includes testing methodology)
 - **using-superpowers** - Introduction to the skills system

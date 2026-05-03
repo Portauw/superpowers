@@ -161,6 +161,36 @@ You: [Fix progress indicators]
 [Continue to Task 3]
 ```
 
+## Parallel Specialist Review
+
+For changes touching specialized surfaces, fan out specialists in parallel alongside the standard `code-reviewer`. Use the parallel-dispatch pattern from `superpowers:dispatching-parallel-agents`: single message with multiple Agent tool calls, then synthesize.
+
+### When to fan out
+
+| Surface touched | Add specialist |
+|---|---|
+| Auth, input validation, secrets, external requests, file uploads, DB queries, payment flows | `security-auditor` |
+| `tests/`, test config, test utilities, CI test config, test fixtures | `test-engineer` |
+
+Both can run alongside `code-reviewer`. They cover different concerns and don't overlap.
+
+### Pattern
+
+```
+Single message:
+  → Agent(code-reviewer, scope=full diff)
+  → Agent(security-auditor, scope=security-relevant files)
+  → Agent(test-engineer, scope=test files)
+
+After all return:
+  → Merge findings into one severity-tagged report
+  → Critical issues block; Important require addressing; Minor are advisory
+```
+
+### Constraint
+
+Personas do NOT invoke other personas. The orchestrator (this skill) merges findings.
+
 ## Integration with Workflows
 
 **Subagent-Driven Development:**
@@ -183,6 +213,12 @@ You: [Fix progress indicators]
 - Ignore Critical issues
 - Proceed with unfixed Important issues
 - Argue with valid technical feedback
+
+**Rationalizations to ignore:**
+
+| Rationalization | Reality |
+|---|---|
+| "This PR is small, just code-reviewer is enough" | Scope size doesn't determine specialist need; surface touched does. Touching auth or tests = specialist required. |
 
 **If reviewer wrong:**
 - Push back with technical reasoning
