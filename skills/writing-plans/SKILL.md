@@ -13,7 +13,7 @@ Assume they are a skilled developer, but know almost nothing about our toolset o
 
 **Announce at start:** "I'm using the writing-plans skill to create the implementation plan."
 
-**Save plans to:** `docs/plans/YYYY-MM-DD-<feature-name>.md`
+**Save plans to:** Check the project's `CLAUDE.md` for a `Plans directory:` or `docs` convention. Use that path. If none is specified, default to `docs/plans/YYYY-MM-DD-<feature-name>.md`.
 
 **Before finalizing the plan:** Invoke `clean-software-design` to verify tactical alignment with architectural principles (dependency direction, aggregate boundaries, layer separation).
 

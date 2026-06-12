@@ -1,5 +1,11 @@
 # Superpowers Release Notes
 
+## v4.9.1 (2026-06-12)
+
+### writing-plans
+
+- Plan save path is now read from the project's `CLAUDE.md` (`Plans directory:` convention). Falls back to `docs/plans/` when not set.
+
 ## v4.9.0 (2026-05-03)
 
 ### New Skills (ported from addyosmani/agent-skills, MIT)
